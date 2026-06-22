@@ -1,0 +1,4071 @@
+﻿{
+  "version": 4,
+  "terraform_version": "1.15.3",
+  "serial": 8,
+  "lineage": "185cbdc2-eee0-979e-1e1c-eae89b5d85fa",
+  "outputs": {
+    "ai_assistant_lambda_name": {
+      "value": "smart-parking-dev-ai-assistant",
+      "type": "string"
+    },
+    "application_bedrock_role_arn": {
+      "value": "arn:aws:iam::533595510771:role/smart-parking-dev-application-pod-role",
+      "type": "string"
+    },
+    "aws_load_balancer_controller_role_arn": {
+      "value": "arn:aws:iam::533595510771:role/smart-parking-dev-aws-load-balancer-controller",
+      "type": "string"
+    },
+    "configure_kubectl_command": {
+      "value": "aws eks update-kubeconfig --region us-east-1 --name smart-parking-dev-eks",
+      "type": "string"
+    },
+    "dynamodb_table_names": {
+      "value": {
+        "bookings": "smart-parking-bookings",
+        "notifications": "smart-parking-notifications",
+        "payments": "smart-parking-payments",
+        "slots": "smart-parking-slots",
+        "users": "smart-parking-users"
+      },
+      "type": [
+        "object",
+        {
+          "bookings": "string",
+          "notifications": "string",
+          "payments": "string",
+          "slots": "string",
+          "users": "string"
+        }
+      ]
+    },
+    "eks_cluster_name": {
+      "value": "smart-parking-dev-eks",
+      "type": "string"
+    },
+    "invoice_bucket_names": {
+      "value": {
+        "dev": "smart-parking-dev-invoices-533595510771-us-east-1",
+        "prod": "smart-parking-prod-invoices-533595510771-us-east-1"
+      },
+      "type": [
+        "object",
+        {
+          "dev": "string",
+          "prod": "string"
+        }
+      ]
+    },
+    "invoice_email_lambda_names": {
+      "value": {
+        "dev": "smart-parking-dev-invoice-email"
+      },
+      "type": [
+        "object",
+        {
+          "dev": "string"
+        }
+      ]
+    },
+    "private_subnet_ids": {
+      "value": [
+        "subnet-0f9cc6fdefe1947f8",
+        "subnet-0f54426f93dfd58f6"
+      ],
+      "type": [
+        "tuple",
+        [
+          "string",
+          "string"
+        ]
+      ]
+    },
+    "public_subnet_ids": {
+      "value": [
+        "subnet-07c05c29011e70e65",
+        "subnet-0e72a44e0bbd468ff"
+      ],
+      "type": [
+        "tuple",
+        [
+          "string",
+          "string"
+        ]
+      ]
+    },
+    "vpc_id": {
+      "value": "vpc-0ca84820e7fe5273f",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "mode": "data",
+      "type": "archive_file",
+      "name": "ai_assistant",
+      "provider": "provider[\"registry.terraform.io/hashicorp/archive\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "exclude_symlink_directories": null,
+            "excludes": null,
+            "id": "f970fd2df32ce2e34a1cb8d236a766273d6a3568",
+            "output_base64sha256": "mdEHTZGFY8+/FTsZa99pIQq89bITDW7c95BVzUdxc4g=",
+            "output_base64sha512": "bpYmFFPy+0ZSvtUUaDAfTHFMWSh95uSdNoycF4YCopY4fB0l/YvWH6oWQUDpXGPaWTFRN9/BNsXIfxJ0MvZ58A==",
+            "output_file_mode": null,
+            "output_md5": "7994d06af5dfbefcb5a6c48f17e327d1",
+            "output_path": "./.terraform/ai-assistant.zip",
+            "output_sha": "f970fd2df32ce2e34a1cb8d236a766273d6a3568",
+            "output_sha256": "99d1074d918563cfbf153b196bdf69210abcf5b2130d6edcf79055cd47717388",
+            "output_sha512": "6e96261453f2fb4652bed51468301f4c714c59287de6e49d368c9c178602a296387c1d25fd8bd61faa164140e95c63da59315137dfc136c5c87f127432f679f0",
+            "output_size": 1437,
+            "source": [],
+            "source_content": null,
+            "source_content_filename": null,
+            "source_dir": "./lambda/ai-assistant",
+            "source_file": null,
+            "type": "zip"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "data",
+      "type": "aws_availability_zones",
+      "name": "available",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "all_availability_zones": null,
+            "exclude_names": null,
+            "exclude_zone_ids": null,
+            "filter": [
+              {
+                "name": "opt-in-status",
+                "values": [
+                  "opt-in-not-required"
+                ]
+              }
+            ],
+            "group_names": [
+              "us-east-1-zg-1"
+            ],
+            "id": "us-east-1",
+            "names": [
+              "us-east-1a",
+              "us-east-1b",
+              "us-east-1c",
+              "us-east-1d",
+              "us-east-1e",
+              "us-east-1f"
+            ],
+            "region": "us-east-1",
+            "state": "available",
+            "timeouts": null,
+            "zone_ids": [
+              "use1-az1",
+              "use1-az2",
+              "use1-az4",
+              "use1-az6",
+              "use1-az3",
+              "use1-az5"
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "data",
+      "type": "aws_caller_identity",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "account_id": "533595510771",
+            "arn": "arn:aws:iam::533595510771:user/nimesh",
+            "id": "533595510771",
+            "user_id": "AIDAXYPGFK7ZRTNQFQVQD"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "data",
+      "type": "aws_partition",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "dns_suffix": "amazonaws.com",
+            "id": "aws",
+            "partition": "aws",
+            "reverse_dns_prefix": "com.amazonaws"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "ai_assistant",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:533595510771:log-group:/aws/lambda/smart-parking-dev-ai-assistant",
+            "deletion_protection_enabled": false,
+            "id": "/aws/lambda/smart-parking-dev-ai-assistant",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/lambda/smart-parking-dev-ai-assistant",
+            "name_prefix": "",
+            "region": "us-east-1",
+            "retention_in_days": 14,
+            "skip_destroy": false,
+            "tags": {},
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "/aws/lambda/smart-parking-dev-ai-assistant",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_eks_pod_identity_association",
+      "name": "application",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "association_arn": "arn:aws:eks:us-east-1:533595510771:podidentityassociation/smart-parking-dev-eks/a-abdr86mcktuykkpus",
+            "association_id": "a-abdr86mcktuykkpus",
+            "cluster_name": "smart-parking-dev-eks",
+            "disable_session_tags": false,
+            "external_id": null,
+            "id": "a-abdr86mcktuykkpus",
+            "namespace": "sps-ns",
+            "region": "us-east-1",
+            "role_arn": "arn:aws:iam::533595510771:role/smart-parking-dev-application-pod-role",
+            "service_account": "smart-parking-app",
+            "tags": null,
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "target_role_arn": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "association_id": "a-abdr86mcktuykkpus",
+            "cluster_name": "smart-parking-dev-eks",
+            "region": "us-east-1"
+          },
+          "dependencies": [
+            "aws_iam_role.application",
+            "data.aws_availability_zones.available",
+            "module.eks.aws_cloudwatch_log_group.cluster",
+            "module.eks.aws_eks_addon.this",
+            "module.eks.aws_eks_cluster.this",
+            "module.eks.aws_eks_node_group.general",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.aws_iam_role_policy_attachment.cluster",
+            "module.eks.aws_iam_role_policy_attachment.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_eks_pod_identity_association",
+      "name": "application_environments",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "dev",
+          "schema_version": 0,
+          "attributes": {
+            "association_arn": "arn:aws:eks:us-east-1:533595510771:podidentityassociation/smart-parking-dev-eks/a-urnz9yojzuweq1l2c",
+            "association_id": "a-urnz9yojzuweq1l2c",
+            "cluster_name": "smart-parking-dev-eks",
+            "disable_session_tags": false,
+            "external_id": null,
+            "id": "a-urnz9yojzuweq1l2c",
+            "namespace": "dev",
+            "region": "us-east-1",
+            "role_arn": "arn:aws:iam::533595510771:role/smart-parking-dev-application-pod-role",
+            "service_account": "smart-parking-app",
+            "tags": null,
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "target_role_arn": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "association_id": "a-urnz9yojzuweq1l2c",
+            "cluster_name": "smart-parking-dev-eks",
+            "region": "us-east-1"
+          },
+          "dependencies": [
+            "aws_iam_role.application",
+            "data.aws_availability_zones.available",
+            "module.eks.aws_cloudwatch_log_group.cluster",
+            "module.eks.aws_eks_addon.this",
+            "module.eks.aws_eks_cluster.this",
+            "module.eks.aws_eks_node_group.general",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.aws_iam_role_policy_attachment.cluster",
+            "module.eks.aws_iam_role_policy_attachment.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": "prod",
+          "schema_version": 0,
+          "attributes": {
+            "association_arn": "arn:aws:eks:us-east-1:533595510771:podidentityassociation/smart-parking-dev-eks/a-gxokwaidcfeuicxhc",
+            "association_id": "a-gxokwaidcfeuicxhc",
+            "cluster_name": "smart-parking-dev-eks",
+            "disable_session_tags": false,
+            "external_id": null,
+            "id": "a-gxokwaidcfeuicxhc",
+            "namespace": "prod",
+            "region": "us-east-1",
+            "role_arn": "arn:aws:iam::533595510771:role/smart-parking-dev-application-pod-role",
+            "service_account": "smart-parking-app",
+            "tags": null,
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "target_role_arn": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "association_id": "a-gxokwaidcfeuicxhc",
+            "cluster_name": "smart-parking-dev-eks",
+            "region": "us-east-1"
+          },
+          "dependencies": [
+            "aws_iam_role.application",
+            "data.aws_availability_zones.available",
+            "module.eks.aws_cloudwatch_log_group.cluster",
+            "module.eks.aws_eks_addon.this",
+            "module.eks.aws_eks_cluster.this",
+            "module.eks.aws_eks_node_group.general",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.aws_iam_role_policy_attachment.cluster",
+            "module.eks.aws_iam_role_policy_attachment.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_eks_pod_identity_association",
+      "name": "load_balancer_controller",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "association_arn": "arn:aws:eks:us-east-1:533595510771:podidentityassociation/smart-parking-dev-eks/a-jlknzzstdyxi2np7i",
+            "association_id": "a-jlknzzstdyxi2np7i",
+            "cluster_name": "smart-parking-dev-eks",
+            "disable_session_tags": false,
+            "external_id": null,
+            "id": "a-jlknzzstdyxi2np7i",
+            "namespace": "kube-system",
+            "region": "us-east-1",
+            "role_arn": "arn:aws:iam::533595510771:role/smart-parking-dev-aws-load-balancer-controller",
+            "service_account": "aws-load-balancer-controller",
+            "tags": null,
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "target_role_arn": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "association_id": "a-jlknzzstdyxi2np7i",
+            "cluster_name": "smart-parking-dev-eks",
+            "region": "us-east-1"
+          },
+          "dependencies": [
+            "aws_iam_policy.load_balancer_controller",
+            "aws_iam_role.load_balancer_controller",
+            "aws_iam_role_policy_attachment.load_balancer_controller",
+            "data.aws_availability_zones.available",
+            "module.eks.aws_cloudwatch_log_group.cluster",
+            "module.eks.aws_eks_addon.this",
+            "module.eks.aws_eks_cluster.this",
+            "module.eks.aws_eks_node_group.general",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.aws_iam_role_policy_attachment.cluster",
+            "module.eks.aws_iam_role_policy_attachment.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "load_balancer_controller",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::533595510771:policy/smart-parking-dev-aws-load-balancer-controller",
+            "attachment_count": 1,
+            "delay_after_policy_creation_in_ms": null,
+            "description": "Permissions for the AWS Load Balancer Controller on EKS.",
+            "id": "arn:aws:iam::533595510771:policy/smart-parking-dev-aws-load-balancer-controller",
+            "name": "smart-parking-dev-aws-load-balancer-controller",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"iam:CreateServiceLinkedRole\"],\"Condition\":{\"StringEquals\":{\"iam:AWSServiceName\":\"elasticloadbalancing.amazonaws.com\"}},\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"ec2:DescribeAccountAttributes\",\"ec2:DescribeAddresses\",\"ec2:DescribeAvailabilityZones\",\"ec2:DescribeInternetGateways\",\"ec2:DescribeVpcs\",\"ec2:DescribeVpcPeeringConnections\",\"ec2:DescribeSubnets\",\"ec2:DescribeSecurityGroups\",\"ec2:DescribeInstances\",\"ec2:DescribeNetworkInterfaces\",\"ec2:DescribeTags\",\"ec2:GetCoipPoolUsage\",\"ec2:DescribeCoipPools\",\"ec2:GetSecurityGroupsForVpc\",\"ec2:DescribeIpamPools\",\"ec2:DescribeRouteTables\",\"elasticloadbalancing:DescribeLoadBalancers\",\"elasticloadbalancing:DescribeLoadBalancerAttributes\",\"elasticloadbalancing:DescribeListeners\",\"elasticloadbalancing:DescribeListenerCertificates\",\"elasticloadbalancing:DescribeSSLPolicies\",\"elasticloadbalancing:DescribeRules\",\"elasticloadbalancing:DescribeTargetGroups\",\"elasticloadbalancing:DescribeTargetGroupAttributes\",\"elasticloadbalancing:DescribeTargetHealth\",\"elasticloadbalancing:DescribeTags\",\"elasticloadbalancing:DescribeTrustStores\",\"elasticloadbalancing:DescribeListenerAttributes\",\"elasticloadbalancing:DescribeCapacityReservation\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"cognito-idp:DescribeUserPoolClient\",\"acm:ListCertificates\",\"acm:DescribeCertificate\",\"iam:ListServerCertificates\",\"iam:GetServerCertificate\",\"waf-regional:GetWebACL\",\"waf-regional:GetWebACLForResource\",\"waf-regional:AssociateWebACL\",\"waf-regional:DisassociateWebACL\",\"wafv2:GetWebACL\",\"wafv2:GetWebACLForResource\",\"wafv2:AssociateWebACL\",\"wafv2:DisassociateWebACL\",\"shield:GetSubscriptionState\",\"shield:DescribeProtection\",\"shield:CreateProtection\",\"shield:DeleteProtection\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"ec2:AuthorizeSecurityGroupIngress\",\"ec2:RevokeSecurityGroupIngress\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"ec2:CreateSecurityGroup\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"ec2:CreateTags\"],\"Condition\":{\"Null\":{\"aws:RequestTag/elbv2.k8s.aws/cluster\":\"false\"},\"StringEquals\":{\"ec2:CreateAction\":\"CreateSecurityGroup\"}},\"Effect\":\"Allow\",\"Resource\":\"arn:aws:ec2:*:*:security-group/*\"},{\"Action\":[\"ec2:CreateTags\",\"ec2:DeleteTags\"],\"Condition\":{\"Null\":{\"aws:RequestTag/elbv2.k8s.aws/cluster\":\"true\",\"aws:ResourceTag/elbv2.k8s.aws/cluster\":\"false\"}},\"Effect\":\"Allow\",\"Resource\":\"arn:aws:ec2:*:*:security-group/*\"},{\"Action\":[\"ec2:AuthorizeSecurityGroupIngress\",\"ec2:RevokeSecurityGroupIngress\",\"ec2:DeleteSecurityGroup\"],\"Condition\":{\"Null\":{\"aws:ResourceTag/elbv2.k8s.aws/cluster\":\"false\"}},\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"elasticloadbalancing:CreateLoadBalancer\",\"elasticloadbalancing:CreateTargetGroup\"],\"Condition\":{\"Null\":{\"aws:RequestTag/elbv2.k8s.aws/cluster\":\"false\"}},\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"elasticloadbalancing:CreateListener\",\"elasticloadbalancing:DeleteListener\",\"elasticloadbalancing:CreateRule\",\"elasticloadbalancing:DeleteRule\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"elasticloadbalancing:AddTags\",\"elasticloadbalancing:RemoveTags\"],\"Condition\":{\"Null\":{\"aws:RequestTag/elbv2.k8s.aws/cluster\":\"true\",\"aws:ResourceTag/elbv2.k8s.aws/cluster\":\"false\"}},\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:elasticloadbalancing:*:*:targetgroup/*/*\",\"arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*\",\"arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*\"]},{\"Action\":[\"elasticloadbalancing:AddTags\",\"elasticloadbalancing:RemoveTags\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:elasticloadbalancing:*:*:listener/net/*/*/*\",\"arn:aws:elasticloadbalancing:*:*:listener/app/*/*/*\",\"arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*\",\"arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*\"]},{\"Action\":[\"elasticloadbalancing:ModifyLoadBalancerAttributes\",\"elasticloadbalancing:SetIpAddressType\",\"elasticloadbalancing:SetSecurityGroups\",\"elasticloadbalancing:SetSubnets\",\"elasticloadbalancing:DeleteLoadBalancer\",\"elasticloadbalancing:ModifyTargetGroup\",\"elasticloadbalancing:ModifyTargetGroupAttributes\",\"elasticloadbalancing:DeleteTargetGroup\",\"elasticloadbalancing:ModifyListenerAttributes\",\"elasticloadbalancing:ModifyCapacityReservation\",\"elasticloadbalancing:ModifyIpPools\"],\"Condition\":{\"Null\":{\"aws:ResourceTag/elbv2.k8s.aws/cluster\":\"false\"}},\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"elasticloadbalancing:AddTags\"],\"Condition\":{\"Null\":{\"aws:RequestTag/elbv2.k8s.aws/cluster\":\"false\"},\"StringEquals\":{\"elasticloadbalancing:CreateAction\":[\"CreateTargetGroup\",\"CreateLoadBalancer\"]}},\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:elasticloadbalancing:*:*:targetgroup/*/*\",\"arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*\",\"arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*\"]},{\"Action\":[\"elasticloadbalancing:RegisterTargets\",\"elasticloadbalancing:DeregisterTargets\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:elasticloadbalancing:*:*:targetgroup/*/*\"},{\"Action\":[\"elasticloadbalancing:SetWebAcl\",\"elasticloadbalancing:ModifyListener\",\"elasticloadbalancing:AddListenerCertificates\",\"elasticloadbalancing:RemoveListenerCertificates\",\"elasticloadbalancing:ModifyRule\",\"elasticloadbalancing:SetRulePriorities\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "ANPAXYPGFK7ZX62SR4PMA",
+            "tags": {},
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "arn": "arn:aws:iam::533595510771:policy/smart-parking-dev-aws-load-balancer-controller"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "ai_assistant_lambda",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::533595510771:role/smart-parking-dev-ai-assistant-lambda",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-06-21T07:41:45Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "smart-parking-dev-ai-assistant-lambda",
+            "inline_policy": [
+              {
+                "name": "smart-parking-dev-ai-assistant-data",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"dynamodb:DescribeTable\",\"dynamodb:GetItem\",\"dynamodb:Query\",\"dynamodb:Scan\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-bookings\",\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-slots\"],\"Sid\":\"ReadParkingContext\"},{\"Action\":[\"bedrock:InvokeModel\",\"bedrock:InvokeModelWithResponseStream\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-pro-v1:0\",\"Sid\":\"InvokeNovaPro\"}]}"
+              }
+            ],
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+            ],
+            "max_session_duration": 3600,
+            "name": "smart-parking-dev-ai-assistant-lambda",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {},
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "unique_id": "AROAXYPGFK7Z2OII26B5T"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-dev-ai-assistant-lambda"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "application",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::533595510771:role/smart-parking-dev-application-pod-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"pods.eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-06-21T04:44:57Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "smart-parking-dev-application-pod-role",
+            "inline_policy": [
+              {
+                "name": "smart-parking-dev-bedrock-nova",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"bedrock:InvokeModel\",\"bedrock:InvokeModelWithResponseStream\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-pro-v1:0\",\"Sid\":\"InvokeNovaPro\"},{\"Action\":\"lambda:InvokeFunction\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:lambda:us-east-1:533595510771:function:smart-parking-dev-ai-assistant\",\"Sid\":\"InvokeGroundedAssistantLambda\"}]}"
+              },
+              {
+                "name": "smart-parking-dev-dynamodb-access",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"dynamodb:BatchGetItem\",\"dynamodb:BatchWriteItem\",\"dynamodb:DeleteItem\",\"dynamodb:DescribeTable\",\"dynamodb:GetItem\",\"dynamodb:PutItem\",\"dynamodb:Query\",\"dynamodb:Scan\",\"dynamodb:UpdateItem\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-bookings\",\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-notifications\",\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-payments\",\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-slots\",\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-users\"],\"Sid\":\"ApplicationTableAccess\"}]}"
+              },
+              {
+                "name": "smart-parking-dev-invoice-storage",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:GetBucketLocation\",\"s3:ListBucket\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::smart-parking-dev-invoices-533595510771-us-east-1\",\"arn:aws:s3:::smart-parking-prod-invoices-533595510771-us-east-1\"],\"Sid\":\"ListInvoiceBuckets\"},{\"Action\":[\"s3:GetObject\",\"s3:PutObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::smart-parking-dev-invoices-533595510771-us-east-1/*\",\"arn:aws:s3:::smart-parking-prod-invoices-533595510771-us-east-1/*\"],\"Sid\":\"ManageInvoiceObjects\"},{\"Action\":[\"kms:Decrypt\",\"kms:DescribeKey\",\"kms:Encrypt\",\"kms:GenerateDataKey\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:kms:us-east-1:533595510771:key/5b3facd7-ae3c-4c09-b115-cc3ee616cf94\",\"arn:aws:kms:us-east-1:533595510771:key/5d7d251a-02a9-4114-9ad9-a12ef9aeb173\"],\"Sid\":\"UseInvoiceKMSKeys\"}]}"
+              },
+              {
+                "name": "smart-parking-dev-sqs-access",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"sqs:ChangeMessageVisibility\",\"sqs:DeleteMessage\",\"sqs:GetQueueAttributes\",\"sqs:GetQueueUrl\",\"sqs:ReceiveMessage\",\"sqs:SendMessage\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:sqs:us-east-1:533595510771:smart-parking-dev-invoices\",\"arn:aws:sqs:us-east-1:533595510771:smart-parking-dev-notifications\",\"arn:aws:sqs:us-east-1:533595510771:smart-parking-prod-invoices\",\"arn:aws:sqs:us-east-1:533595510771:smart-parking-prod-notifications\"],\"Sid\":\"PublishAndConsumeApplicationEvents\"},{\"Action\":[\"kms:Decrypt\",\"kms:DescribeKey\",\"kms:GenerateDataKey\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:kms:us-east-1:533595510771:key/3d1858db-6723-4e24-a4e0-52e0bbcbfba6\",\"arn:aws:kms:us-east-1:533595510771:key/007dce5a-4a96-449d-8676-2281edba76ee\"],\"Sid\":\"UseSQSKeys\"}]}"
+              }
+            ],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "smart-parking-dev-application-pod-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {},
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "unique_id": "AROAXYPGFK7ZSISI6VKPS"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-dev-application-pod-role"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "load_balancer_controller",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::533595510771:role/smart-parking-dev-aws-load-balancer-controller",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:AssumeRole\",\"sts:TagSession\"],\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"pods.eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-06-21T05:15:48Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "smart-parking-dev-aws-load-balancer-controller",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::533595510771:policy/smart-parking-dev-aws-load-balancer-controller"
+            ],
+            "max_session_duration": 3600,
+            "name": "smart-parking-dev-aws-load-balancer-controller",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {},
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "unique_id": "AROAXYPGFK7Z3BUDL54SK"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-dev-aws-load-balancer-controller"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "ai_assistant_data",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "smart-parking-dev-ai-assistant-lambda:smart-parking-dev-ai-assistant-data",
+            "name": "smart-parking-dev-ai-assistant-data",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"dynamodb:DescribeTable\",\"dynamodb:GetItem\",\"dynamodb:Query\",\"dynamodb:Scan\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-bookings\",\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-slots\"],\"Sid\":\"ReadParkingContext\"},{\"Action\":[\"bedrock:InvokeModel\",\"bedrock:InvokeModelWithResponseStream\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-pro-v1:0\",\"Sid\":\"InvokeNovaPro\"}]}",
+            "role": "smart-parking-dev-ai-assistant-lambda"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-dev-ai-assistant-data",
+            "role": "smart-parking-dev-ai-assistant-lambda"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.ai_assistant_lambda",
+            "data.aws_partition.current",
+            "module.dynamodb.aws_dynamodb_table.this"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "application_bedrock",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "smart-parking-dev-application-pod-role:smart-parking-dev-bedrock-nova",
+            "name": "smart-parking-dev-bedrock-nova",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"bedrock:InvokeModel\",\"bedrock:InvokeModelWithResponseStream\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-pro-v1:0\",\"Sid\":\"InvokeNovaPro\"},{\"Action\":\"lambda:InvokeFunction\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:lambda:us-east-1:533595510771:function:smart-parking-dev-ai-assistant\",\"Sid\":\"InvokeGroundedAssistantLambda\"}]}",
+            "role": "smart-parking-dev-application-pod-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-dev-bedrock-nova",
+            "role": "smart-parking-dev-application-pod-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_cloudwatch_log_group.ai_assistant",
+            "aws_iam_role.ai_assistant_lambda",
+            "aws_iam_role.application",
+            "aws_iam_role_policy.ai_assistant_data",
+            "aws_iam_role_policy_attachment.ai_assistant_basic",
+            "aws_lambda_function.ai_assistant",
+            "data.archive_file.ai_assistant",
+            "data.aws_partition.current",
+            "module.dynamodb.aws_dynamodb_table.this"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "application_dynamodb",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "smart-parking-dev-application-pod-role:smart-parking-dev-dynamodb-access",
+            "name": "smart-parking-dev-dynamodb-access",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"dynamodb:BatchGetItem\",\"dynamodb:BatchWriteItem\",\"dynamodb:DeleteItem\",\"dynamodb:DescribeTable\",\"dynamodb:GetItem\",\"dynamodb:PutItem\",\"dynamodb:Query\",\"dynamodb:Scan\",\"dynamodb:UpdateItem\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-bookings\",\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-notifications\",\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-payments\",\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-slots\",\"arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-users\"],\"Sid\":\"ApplicationTableAccess\"}]}",
+            "role": "smart-parking-dev-application-pod-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-dev-dynamodb-access",
+            "role": "smart-parking-dev-application-pod-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.application",
+            "module.dynamodb.aws_dynamodb_table.this"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "application_invoice_storage",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "smart-parking-dev-application-pod-role:smart-parking-dev-invoice-storage",
+            "name": "smart-parking-dev-invoice-storage",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:GetBucketLocation\",\"s3:ListBucket\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::smart-parking-dev-invoices-533595510771-us-east-1\",\"arn:aws:s3:::smart-parking-prod-invoices-533595510771-us-east-1\"],\"Sid\":\"ListInvoiceBuckets\"},{\"Action\":[\"s3:GetObject\",\"s3:PutObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::smart-parking-dev-invoices-533595510771-us-east-1/*\",\"arn:aws:s3:::smart-parking-prod-invoices-533595510771-us-east-1/*\"],\"Sid\":\"ManageInvoiceObjects\"},{\"Action\":[\"kms:Decrypt\",\"kms:DescribeKey\",\"kms:Encrypt\",\"kms:GenerateDataKey\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:kms:us-east-1:533595510771:key/cca72410-9c72-40c0-9184-0b1feda970ed\",\"arn:aws:kms:us-east-1:533595510771:key/05946355-dc0e-4600-ba21-3cd264c079d4\"],\"Sid\":\"UseInvoiceKMSKeys\"}]}",
+            "role": "smart-parking-dev-application-pod-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-dev-invoice-storage",
+            "role": "smart-parking-dev-application-pod-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.application",
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_kms_key.invoice",
+            "module.invoice_storage.aws_s3_bucket.invoice"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "ai_assistant_basic",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "smart-parking-dev-ai-assistant-lambda/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+            "policy_arn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+            "role": "smart-parking-dev-ai-assistant-lambda"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "policy_arn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+            "role": "smart-parking-dev-ai-assistant-lambda"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.ai_assistant_lambda",
+            "data.aws_partition.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "load_balancer_controller",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "smart-parking-dev-aws-load-balancer-controller/arn:aws:iam::533595510771:policy/smart-parking-dev-aws-load-balancer-controller",
+            "policy_arn": "arn:aws:iam::533595510771:policy/smart-parking-dev-aws-load-balancer-controller",
+            "role": "smart-parking-dev-aws-load-balancer-controller"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "policy_arn": "arn:aws:iam::533595510771:policy/smart-parking-dev-aws-load-balancer-controller",
+            "role": "smart-parking-dev-aws-load-balancer-controller"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_policy.load_balancer_controller",
+            "aws_iam_role.load_balancer_controller"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lambda_function",
+      "name": "ai_assistant",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "architectures": [
+              "arm64"
+            ],
+            "arn": "arn:aws:lambda:us-east-1:533595510771:function:smart-parking-dev-ai-assistant",
+            "capacity_provider_config": [],
+            "code_sha256": "mdEHTZGFY8+/FTsZa99pIQq89bITDW7c95BVzUdxc4g=",
+            "code_signing_config_arn": "",
+            "dead_letter_config": [],
+            "description": "",
+            "durable_config": [],
+            "environment": [
+              {
+                "variables": {
+                  "BEDROCK_MODEL_ID": "amazon.nova-pro-v1:0",
+                  "BEDROCK_REGION": "us-east-1",
+                  "BOOKINGS_TABLE": "smart-parking-bookings",
+                  "SLOTS_TABLE": "smart-parking-slots"
+                }
+              }
+            ],
+            "ephemeral_storage": [
+              {
+                "size": 512
+              }
+            ],
+            "file_system_config": [],
+            "filename": "./.terraform/ai-assistant.zip",
+            "function_name": "smart-parking-dev-ai-assistant",
+            "handler": "index.handler",
+            "id": "smart-parking-dev-ai-assistant",
+            "image_config": [],
+            "image_uri": "",
+            "invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:533595510771:function:smart-parking-dev-ai-assistant/invocations",
+            "kms_key_arn": "",
+            "last_modified": "2026-06-21T08:15:51.000+0000",
+            "layers": [],
+            "logging_config": [
+              {
+                "application_log_level": "",
+                "log_format": "Text",
+                "log_group": "/aws/lambda/smart-parking-dev-ai-assistant",
+                "system_log_level": ""
+              }
+            ],
+            "memory_size": 512,
+            "package_type": "Zip",
+            "publish": false,
+            "publish_to": null,
+            "qualified_arn": "arn:aws:lambda:us-east-1:533595510771:function:smart-parking-dev-ai-assistant:$LATEST",
+            "qualified_invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:533595510771:function:smart-parking-dev-ai-assistant:$LATEST/invocations",
+            "region": "us-east-1",
+            "replace_security_groups_on_destroy": null,
+            "replacement_security_group_ids": null,
+            "reserved_concurrent_executions": -1,
+            "response_streaming_invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2021-11-15/functions/arn:aws:lambda:us-east-1:533595510771:function:smart-parking-dev-ai-assistant/response-streaming-invocations",
+            "role": "arn:aws:iam::533595510771:role/smart-parking-dev-ai-assistant-lambda",
+            "runtime": "nodejs22.x",
+            "s3_bucket": null,
+            "s3_key": null,
+            "s3_object_version": null,
+            "signing_job_arn": "",
+            "signing_profile_version_arn": "",
+            "skip_destroy": false,
+            "snap_start": [],
+            "source_code_hash": "mdEHTZGFY8+/FTsZa99pIQq89bITDW7c95BVzUdxc4g=",
+            "source_code_size": 1437,
+            "source_kms_key_arn": "",
+            "tags": {},
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "tenancy_config": [],
+            "timeout": 30,
+            "timeouts": null,
+            "tracing_config": [
+              {
+                "mode": "PassThrough"
+              }
+            ],
+            "version": "$LATEST",
+            "vpc_config": []
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "function_name": "smart-parking-dev-ai-assistant",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_cloudwatch_log_group.ai_assistant",
+            "aws_iam_role.ai_assistant_lambda",
+            "aws_iam_role_policy.ai_assistant_data",
+            "aws_iam_role_policy_attachment.ai_assistant_basic",
+            "data.archive_file.ai_assistant",
+            "data.aws_partition.current",
+            "module.dynamodb.aws_dynamodb_table.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.dynamodb",
+      "mode": "managed",
+      "type": "aws_dynamodb_table",
+      "name": "this",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "bookings",
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-bookings",
+            "attribute": [
+              {
+                "name": "bookingId",
+                "type": "S"
+              }
+            ],
+            "billing_mode": "PAY_PER_REQUEST",
+            "deletion_protection_enabled": false,
+            "global_secondary_index": [],
+            "global_table_witness": [],
+            "hash_key": "bookingId",
+            "id": "smart-parking-bookings",
+            "import_table": [],
+            "local_secondary_index": [],
+            "name": "smart-parking-bookings",
+            "on_demand_throughput": [],
+            "point_in_time_recovery": [
+              {
+                "enabled": true,
+                "recovery_period_in_days": 35
+              }
+            ],
+            "range_key": null,
+            "read_capacity": 0,
+            "region": "us-east-1",
+            "replica": [],
+            "restore_backup_arn": null,
+            "restore_date_time": null,
+            "restore_source_name": null,
+            "restore_source_table_arn": null,
+            "restore_to_latest_time": null,
+            "server_side_encryption": [
+              {
+                "enabled": true,
+                "kms_key_arn": ""
+              }
+            ],
+            "stream_arn": "",
+            "stream_enabled": false,
+            "stream_label": "",
+            "stream_view_type": "",
+            "table_class": "STANDARD",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-bookings",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-bookings",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "ttl": [
+              {
+                "attribute_name": "",
+                "enabled": false
+              }
+            ],
+            "warm_throughput": [],
+            "write_capacity": 0
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-bookings",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjozNjAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0="
+        },
+        {
+          "index_key": "notifications",
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-notifications",
+            "attribute": [
+              {
+                "name": "notificationId",
+                "type": "S"
+              }
+            ],
+            "billing_mode": "PAY_PER_REQUEST",
+            "deletion_protection_enabled": false,
+            "global_secondary_index": [],
+            "global_table_witness": [],
+            "hash_key": "notificationId",
+            "id": "smart-parking-notifications",
+            "import_table": [],
+            "local_secondary_index": [],
+            "name": "smart-parking-notifications",
+            "on_demand_throughput": [],
+            "point_in_time_recovery": [
+              {
+                "enabled": true,
+                "recovery_period_in_days": 35
+              }
+            ],
+            "range_key": null,
+            "read_capacity": 0,
+            "region": "us-east-1",
+            "replica": [],
+            "restore_backup_arn": null,
+            "restore_date_time": null,
+            "restore_source_name": null,
+            "restore_source_table_arn": null,
+            "restore_to_latest_time": null,
+            "server_side_encryption": [
+              {
+                "enabled": true,
+                "kms_key_arn": ""
+              }
+            ],
+            "stream_arn": "",
+            "stream_enabled": false,
+            "stream_label": "",
+            "stream_view_type": "",
+            "table_class": "STANDARD",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-notifications",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-notifications",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "ttl": [
+              {
+                "attribute_name": "",
+                "enabled": false
+              }
+            ],
+            "warm_throughput": [],
+            "write_capacity": 0
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-notifications",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjozNjAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0="
+        },
+        {
+          "index_key": "payments",
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-payments",
+            "attribute": [
+              {
+                "name": "paymentId",
+                "type": "S"
+              }
+            ],
+            "billing_mode": "PAY_PER_REQUEST",
+            "deletion_protection_enabled": false,
+            "global_secondary_index": [],
+            "global_table_witness": [],
+            "hash_key": "paymentId",
+            "id": "smart-parking-payments",
+            "import_table": [],
+            "local_secondary_index": [],
+            "name": "smart-parking-payments",
+            "on_demand_throughput": [],
+            "point_in_time_recovery": [
+              {
+                "enabled": true,
+                "recovery_period_in_days": 35
+              }
+            ],
+            "range_key": null,
+            "read_capacity": 0,
+            "region": "us-east-1",
+            "replica": [],
+            "restore_backup_arn": null,
+            "restore_date_time": null,
+            "restore_source_name": null,
+            "restore_source_table_arn": null,
+            "restore_to_latest_time": null,
+            "server_side_encryption": [
+              {
+                "enabled": true,
+                "kms_key_arn": ""
+              }
+            ],
+            "stream_arn": "",
+            "stream_enabled": false,
+            "stream_label": "",
+            "stream_view_type": "",
+            "table_class": "STANDARD",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-payments",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-payments",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "ttl": [
+              {
+                "attribute_name": "",
+                "enabled": false
+              }
+            ],
+            "warm_throughput": [],
+            "write_capacity": 0
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-payments",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjozNjAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0="
+        },
+        {
+          "index_key": "slots",
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-slots",
+            "attribute": [
+              {
+                "name": "slotId",
+                "type": "S"
+              }
+            ],
+            "billing_mode": "PAY_PER_REQUEST",
+            "deletion_protection_enabled": false,
+            "global_secondary_index": [],
+            "global_table_witness": [],
+            "hash_key": "slotId",
+            "id": "smart-parking-slots",
+            "import_table": [],
+            "local_secondary_index": [],
+            "name": "smart-parking-slots",
+            "on_demand_throughput": [],
+            "point_in_time_recovery": [
+              {
+                "enabled": true,
+                "recovery_period_in_days": 35
+              }
+            ],
+            "range_key": null,
+            "read_capacity": 0,
+            "region": "us-east-1",
+            "replica": [],
+            "restore_backup_arn": null,
+            "restore_date_time": null,
+            "restore_source_name": null,
+            "restore_source_table_arn": null,
+            "restore_to_latest_time": null,
+            "server_side_encryption": [
+              {
+                "enabled": true,
+                "kms_key_arn": ""
+              }
+            ],
+            "stream_arn": "",
+            "stream_enabled": false,
+            "stream_label": "",
+            "stream_view_type": "",
+            "table_class": "STANDARD",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-slots",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-slots",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "ttl": [
+              {
+                "attribute_name": "",
+                "enabled": false
+              }
+            ],
+            "warm_throughput": [],
+            "write_capacity": 0
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-slots",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjozNjAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0="
+        },
+        {
+          "index_key": "users",
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:dynamodb:us-east-1:533595510771:table/smart-parking-users",
+            "attribute": [
+              {
+                "name": "userId",
+                "type": "S"
+              }
+            ],
+            "billing_mode": "PAY_PER_REQUEST",
+            "deletion_protection_enabled": false,
+            "global_secondary_index": [],
+            "global_table_witness": [],
+            "hash_key": "userId",
+            "id": "smart-parking-users",
+            "import_table": [],
+            "local_secondary_index": [],
+            "name": "smart-parking-users",
+            "on_demand_throughput": [],
+            "point_in_time_recovery": [
+              {
+                "enabled": true,
+                "recovery_period_in_days": 35
+              }
+            ],
+            "range_key": null,
+            "read_capacity": 0,
+            "region": "us-east-1",
+            "replica": [],
+            "restore_backup_arn": null,
+            "restore_date_time": null,
+            "restore_source_name": null,
+            "restore_source_table_arn": null,
+            "restore_to_latest_time": null,
+            "server_side_encryption": [
+              {
+                "enabled": true,
+                "kms_key_arn": ""
+              }
+            ],
+            "stream_arn": "",
+            "stream_enabled": false,
+            "stream_label": "",
+            "stream_view_type": "",
+            "table_class": "STANDARD",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-users",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-users",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "ttl": [
+              {
+                "attribute_name": "",
+                "enabled": false
+              }
+            ],
+            "warm_throughput": [],
+            "write_capacity": 0
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-users",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjozNjAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0="
+        }
+      ]
+    },
+    {
+      "module": "module.eks",
+      "mode": "data",
+      "type": "aws_partition",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "dns_suffix": "amazonaws.com",
+            "id": "aws",
+            "partition": "aws",
+            "reverse_dns_prefix": "com.amazonaws"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "module": "module.eks",
+      "mode": "managed",
+      "type": "aws_cloudwatch_log_group",
+      "name": "cluster",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:logs:us-east-1:533595510771:log-group:/aws/eks/smart-parking-dev-eks/cluster",
+            "deletion_protection_enabled": false,
+            "id": "/aws/eks/smart-parking-dev-eks/cluster",
+            "kms_key_id": "",
+            "log_group_class": "STANDARD",
+            "name": "/aws/eks/smart-parking-dev-eks/cluster",
+            "name_prefix": "",
+            "region": "us-east-1",
+            "retention_in_days": 30,
+            "skip_destroy": false,
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "/aws/eks/smart-parking-dev-eks/cluster",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eks",
+      "mode": "managed",
+      "type": "aws_eks_addon",
+      "name": "this",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "coredns",
+          "schema_version": 0,
+          "attributes": {
+            "addon_name": "coredns",
+            "addon_version": "v1.13.2-eksbuild.10",
+            "arn": "arn:aws:eks:us-east-1:533595510771:addon/smart-parking-dev-eks/coredns/10cf76e5-8176-340a-f9fa-92aaecdbb212",
+            "cluster_name": "smart-parking-dev-eks",
+            "configuration_values": "",
+            "created_at": "2026-06-22T05:26:05Z",
+            "id": "smart-parking-dev-eks:coredns",
+            "modified_at": "2026-06-22T05:26:17Z",
+            "namespace_config": [
+              {
+                "namespace": "kube-system"
+              }
+            ],
+            "pod_identity_association": [],
+            "preserve": null,
+            "region": "us-east-1",
+            "resolve_conflicts_on_create": "OVERWRITE",
+            "resolve_conflicts_on_update": "PRESERVE",
+            "service_account_role_arn": "",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "addon_name": "coredns",
+            "cluster_name": "smart-parking-dev-eks",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjI0MDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.eks.aws_cloudwatch_log_group.cluster",
+            "module.eks.aws_eks_cluster.this",
+            "module.eks.aws_eks_node_group.general",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.aws_iam_role_policy_attachment.cluster",
+            "module.eks.aws_iam_role_policy_attachment.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": "eks-pod-identity-agent",
+          "schema_version": 0,
+          "attributes": {
+            "addon_name": "eks-pod-identity-agent",
+            "addon_version": "v1.3.10-eksbuild.3",
+            "arn": "arn:aws:eks:us-east-1:533595510771:addon/smart-parking-dev-eks/eks-pod-identity-agent/98cf76e5-8174-5066-31f7-d7a93b7ee16e",
+            "cluster_name": "smart-parking-dev-eks",
+            "configuration_values": "",
+            "created_at": "2026-06-22T05:26:05Z",
+            "id": "smart-parking-dev-eks:eks-pod-identity-agent",
+            "modified_at": "2026-06-22T05:26:21Z",
+            "namespace_config": [
+              {
+                "namespace": "kube-system"
+              }
+            ],
+            "pod_identity_association": [],
+            "preserve": null,
+            "region": "us-east-1",
+            "resolve_conflicts_on_create": "OVERWRITE",
+            "resolve_conflicts_on_update": "PRESERVE",
+            "service_account_role_arn": "",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "addon_name": "eks-pod-identity-agent",
+            "cluster_name": "smart-parking-dev-eks",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjI0MDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.eks.aws_cloudwatch_log_group.cluster",
+            "module.eks.aws_eks_cluster.this",
+            "module.eks.aws_eks_node_group.general",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.aws_iam_role_policy_attachment.cluster",
+            "module.eks.aws_iam_role_policy_attachment.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": "kube-proxy",
+          "schema_version": 0,
+          "attributes": {
+            "addon_name": "kube-proxy",
+            "addon_version": "v1.35.3-eksbuild.11",
+            "arn": "arn:aws:eks:us-east-1:533595510771:addon/smart-parking-dev-eks/kube-proxy/c0cf76e5-8173-2e65-b8b2-c25c31fd2b2d",
+            "cluster_name": "smart-parking-dev-eks",
+            "configuration_values": "",
+            "created_at": "2026-06-22T05:26:05Z",
+            "id": "smart-parking-dev-eks:kube-proxy",
+            "modified_at": "2026-06-22T05:26:21Z",
+            "namespace_config": [
+              {
+                "namespace": "kube-system"
+              }
+            ],
+            "pod_identity_association": [],
+            "preserve": null,
+            "region": "us-east-1",
+            "resolve_conflicts_on_create": "OVERWRITE",
+            "resolve_conflicts_on_update": "PRESERVE",
+            "service_account_role_arn": "",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "addon_name": "kube-proxy",
+            "cluster_name": "smart-parking-dev-eks",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjI0MDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.eks.aws_cloudwatch_log_group.cluster",
+            "module.eks.aws_eks_cluster.this",
+            "module.eks.aws_eks_node_group.general",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.aws_iam_role_policy_attachment.cluster",
+            "module.eks.aws_iam_role_policy_attachment.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": "vpc-cni",
+          "schema_version": 0,
+          "attributes": {
+            "addon_name": "vpc-cni",
+            "addon_version": "v1.21.2-eksbuild.2",
+            "arn": "arn:aws:eks:us-east-1:533595510771:addon/smart-parking-dev-eks/vpc-cni/54cf76e5-8175-72a0-dd90-649d27b2aefb",
+            "cluster_name": "smart-parking-dev-eks",
+            "configuration_values": "",
+            "created_at": "2026-06-22T05:26:05Z",
+            "id": "smart-parking-dev-eks:vpc-cni",
+            "modified_at": "2026-06-22T05:26:42Z",
+            "namespace_config": [
+              {
+                "namespace": "kube-system"
+              }
+            ],
+            "pod_identity_association": [],
+            "preserve": null,
+            "region": "us-east-1",
+            "resolve_conflicts_on_create": "OVERWRITE",
+            "resolve_conflicts_on_update": "PRESERVE",
+            "service_account_role_arn": "",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "addon_name": "vpc-cni",
+            "cluster_name": "smart-parking-dev-eks",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjI0MDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.eks.aws_cloudwatch_log_group.cluster",
+            "module.eks.aws_eks_cluster.this",
+            "module.eks.aws_eks_node_group.general",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.aws_iam_role_policy_attachment.cluster",
+            "module.eks.aws_iam_role_policy_attachment.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eks",
+      "mode": "managed",
+      "type": "aws_eks_cluster",
+      "name": "this",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "access_config": [
+              {
+                "authentication_mode": "API_AND_CONFIG_MAP",
+                "bootstrap_cluster_creator_admin_permissions": true
+              }
+            ],
+            "arn": "arn:aws:eks:us-east-1:533595510771:cluster/smart-parking-dev-eks",
+            "bootstrap_self_managed_addons": true,
+            "certificate_authority": [
+              {
+                "data": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJQm45WWxpOVN6Zkl3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TmpBMk1qSXdOVEUxTURsYUZ3MHpOakEyTVRrd05USXdNRGxhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUURIUXJMdkZOSE5uOExuL2VNNHNlWXc2Z2lyd3dMUkM4T3VsZTdIeVhoQ0RnM3YzM1V0Skhvb2hadk4KREQ1UllxNHZ2MTB3Nzh6dG9zUnpwdGVhOWVMbnAvU012WmZOZFhIaCtZWEtVRnNiOVpISVBLS2NRTlZXUEw2OQpKUzcyRlZFMnd6Y21WM2hITGlnVUJnWlZRZDU0ejE5N09NSlM0VjA0S3JxUzhPeXBnbGlmTjI0K0ZLY2tBLzJECnV6cDM5K3JIdzZYZWoxVklBblU0OE9UcncyYTg4TnVpa1pHdE0zNDFMRm1OMVoyYmpMY3I2Wi9MblJNSFp2K0wKeUlCMldUT0h2TlE1T2JTRkxRMlRVODVkZVpBdUpobWpZTEUwdkhrK3hzcFRieWZKNXJJVjdmZHhBL1d0K0RuUQpKQm9EbVRUT2ZTb2d0cGtGcGJiaWdLSG9uTGVQQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJSQk8vditheVAza3o0NEdVQStqKzFoU0RsK3ZqQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQ2lmY1JXZlVrRwo5RnFwNnZnbm42TjJsNEVsbnB1dW9UcVhwNXM1VWh6bGlya0hJSjZLR1pyTVh6aW8wTEEvaUhSQmZCSzJqRkk0CjAyY2RBNmxsTFdici9QZlRLaEh0U0kxVWhSU2NrVlJ4T2Zrc0I2YWcxV3htcGtRTjdXNG4rNlVzSXh1OHYrcDEKWlFlQjErcWVQSmZVOFkrbVh2cDdtRWhKRUpYb2R2V1FCb2psYzRhcG10Tnd1V2Vsd1JZVGFtTHVzRmcxK01PRAppb0xraUxnWjJ4TjJ2R1h3aVpIYXBYeHdWNG4yUG5jRWRxVVpkYkNmVWx2TjZybjNPRW51WDd1QllNSUFPdm5hCkFWc0l4V3B2cGxhU1Q0KzBsRmc1Qm1HOWlQc2FDclExSTlQYkxmQVJJVUdNT2ZRbHI5aHpHODNvMUozdklWc04KMWVnLzlZZW11QWY2Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+              }
+            ],
+            "cluster_id": null,
+            "compute_config": [
+              {
+                "enabled": false,
+                "node_pools": [],
+                "node_role_arn": ""
+              }
+            ],
+            "control_plane_scaling_config": [
+              {
+                "tier": "standard"
+              }
+            ],
+            "created_at": "2026-06-22T05:13:50Z",
+            "deletion_protection": false,
+            "enabled_cluster_log_types": [
+              "api",
+              "audit",
+              "authenticator",
+              "controllerManager",
+              "scheduler"
+            ],
+            "encryption_config": [],
+            "endpoint": "https://FD93F506C8C0C5977FE86BF15A8044D2.gr7.us-east-1.eks.amazonaws.com",
+            "force_update_version": null,
+            "id": "smart-parking-dev-eks",
+            "identity": [
+              {
+                "oidc": [
+                  {
+                    "issuer": "https://oidc.eks.us-east-1.amazonaws.com/id/FD93F506C8C0C5977FE86BF15A8044D2"
+                  }
+                ]
+              }
+            ],
+            "kubernetes_network_config": [
+              {
+                "elastic_load_balancing": [
+                  {
+                    "enabled": false
+                  }
+                ],
+                "ip_family": "ipv4",
+                "service_ipv4_cidr": "172.20.0.0/16",
+                "service_ipv6_cidr": ""
+              }
+            ],
+            "name": "smart-parking-dev-eks",
+            "outpost_config": [],
+            "platform_version": "eks.15",
+            "region": "us-east-1",
+            "remote_network_config": [],
+            "role_arn": "arn:aws:iam::533595510771:role/smart-parking-dev-eks-cluster-role",
+            "status": "ACTIVE",
+            "storage_config": [
+              {
+                "block_storage": [
+                  {
+                    "enabled": false
+                  }
+                ]
+              }
+            ],
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "upgrade_policy": [
+              {
+                "support_type": "EXTENDED"
+              }
+            ],
+            "version": "1.35",
+            "vpc_config": [
+              {
+                "cluster_security_group_id": "sg-09fa570aca4cbe050",
+                "endpoint_private_access": true,
+                "endpoint_public_access": true,
+                "public_access_cidrs": [
+                  "0.0.0.0/0"
+                ],
+                "security_group_ids": null,
+                "subnet_ids": [
+                  "subnet-0f54426f93dfd58f6",
+                  "subnet-0f9cc6fdefe1947f8"
+                ],
+                "vpc_id": "vpc-0ca84820e7fe5273f"
+              }
+            ],
+            "zonal_shift_config": []
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-dev-eks",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjkwMDAwMDAwMDAwMCwidXBkYXRlIjozNjAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.eks.aws_cloudwatch_log_group.cluster",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.aws_iam_role_policy_attachment.cluster",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eks",
+      "mode": "managed",
+      "type": "aws_eks_node_group",
+      "name": "general",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "ami_type": "AL2023_x86_64_STANDARD",
+            "arn": "arn:aws:eks:us-east-1:533595510771:nodegroup/smart-parking-dev-eks/smart-parking-dev-eks-general/aecf76e4-9135-d3cc-961b-c9588991a7b3",
+            "capacity_type": "ON_DEMAND",
+            "cluster_name": "smart-parking-dev-eks",
+            "disk_size": 20,
+            "force_update_version": null,
+            "id": "smart-parking-dev-eks:smart-parking-dev-eks-general",
+            "instance_types": [
+              "t3.medium"
+            ],
+            "labels": null,
+            "launch_template": [],
+            "node_group_name": "smart-parking-dev-eks-general",
+            "node_group_name_prefix": "",
+            "node_repair_config": [],
+            "node_role_arn": "arn:aws:iam::533595510771:role/smart-parking-dev-eks-node-role",
+            "region": "us-east-1",
+            "release_version": "1.35.6-20260618",
+            "remote_access": [],
+            "resources": [
+              {
+                "autoscaling_groups": [
+                  {
+                    "name": "eks-smart-parking-dev-eks-general-aecf76e4-9135-d3cc-961b-c9588991a7b3"
+                  }
+                ],
+                "remote_access_security_group_id": ""
+              }
+            ],
+            "scaling_config": [
+              {
+                "desired_size": 2,
+                "max_size": 4,
+                "min_size": 2
+              }
+            ],
+            "status": "ACTIVE",
+            "subnet_ids": [
+              "subnet-0f54426f93dfd58f6",
+              "subnet-0f9cc6fdefe1947f8"
+            ],
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "taint": [],
+            "timeouts": null,
+            "update_config": [
+              {
+                "max_unavailable": 1,
+                "max_unavailable_percentage": 0,
+                "update_strategy": ""
+              }
+            ],
+            "version": "1.35"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "cluster_name": "smart-parking-dev-eks",
+            "node_group_name": "smart-parking-dev-eks-general",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozNjAwMDAwMDAwMDAwLCJkZWxldGUiOjM2MDAwMDAwMDAwMDAsInVwZGF0ZSI6MzYwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.eks.aws_cloudwatch_log_group.cluster",
+            "module.eks.aws_eks_cluster.this",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.aws_iam_role_policy_attachment.cluster",
+            "module.eks.aws_iam_role_policy_attachment.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eks",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "cluster",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::533595510771:role/smart-parking-dev-eks-cluster-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"eks.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-06-21T04:47:20Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "smart-parking-dev-eks-cluster-role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+            ],
+            "max_session_duration": 3600,
+            "name": "smart-parking-dev-eks-cluster-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "unique_id": "AROAXYPGFK7ZQE2UUVL67"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-dev-eks-cluster-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eks",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "nodes",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::533595510771:role/smart-parking-dev-eks-node-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-06-21T04:47:20Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "smart-parking-dev-eks-node-role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly",
+              "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+              "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+            ],
+            "max_session_duration": 3600,
+            "name": "smart-parking-dev-eks-node-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Project": "smart-parking"
+            },
+            "unique_id": "AROAXYPGFK7Z6567IPMLJ"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "name": "smart-parking-dev-eks-node-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eks",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "cluster",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "smart-parking-dev-eks-cluster-role/arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+            "policy_arn": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+            "role": "smart-parking-dev-eks-cluster-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "policy_arn": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+            "role": "smart-parking-dev-eks-cluster-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.eks.aws_iam_role.cluster",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.eks",
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "nodes",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "cni",
+          "schema_version": 0,
+          "attributes": {
+            "id": "smart-parking-dev-eks-node-role/arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+            "policy_arn": "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+            "role": "smart-parking-dev-eks-node-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "policy_arn": "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+            "role": "smart-parking-dev-eks-node-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": "ecr",
+          "schema_version": 0,
+          "attributes": {
+            "id": "smart-parking-dev-eks-node-role/arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly",
+            "policy_arn": "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly",
+            "role": "smart-parking-dev-eks-node-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "policy_arn": "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly",
+            "role": "smart-parking-dev-eks-node-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": "worker",
+          "schema_version": 0,
+          "attributes": {
+            "id": "smart-parking-dev-eks-node-role/arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+            "policy_arn": "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+            "role": "smart-parking-dev-eks-node-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "policy_arn": "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+            "role": "smart-parking-dev-eks-node-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.eks.aws_iam_role.nodes",
+            "module.eks.data.aws_partition.current",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_route_table_association.private",
+            "module.vpc.aws_route_table_association.public",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_email",
+      "mode": "data",
+      "type": "archive_file",
+      "name": "lambda",
+      "provider": "provider[\"registry.terraform.io/hashicorp/archive\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 0,
+          "attributes": {
+            "exclude_symlink_directories": null,
+            "excludes": null,
+            "id": "2c6bc1a94528bce4acb71b13dd2ce15074f533b4",
+            "output_base64sha256": "Xtry0Z3xUBufARjlt8ahiaMiEmN4gEmMzU9zCAl00SY=",
+            "output_base64sha512": "irU/lq0jsInVNJDq3mPKId3Ilh2nS3PskHsCh9DUNPad8fs+tanq5aUYY8DAAAkYjYFrXDnpgKSuV7YZ24Yl6w==",
+            "output_file_mode": null,
+            "output_md5": "4b9b3802ed183357ea901a80a77cf7aa",
+            "output_path": "./.terraform/invoice-email.zip",
+            "output_sha": "2c6bc1a94528bce4acb71b13dd2ce15074f533b4",
+            "output_sha256": "5edaf2d19df1501b9f0118e5b7c6a189a32212637880498ccd4f73080974d126",
+            "output_sha512": "8ab53f96ad23b089d53490eade63ca21ddc8961da74b73ec907b0287d0d434f69df1fb3eb5a9eae5a51863c0c00009188d816b5c39e980a4ae57b619db8625eb",
+            "output_size": 2063,
+            "source": [],
+            "source_content": null,
+            "source_content_filename": null,
+            "source_dir": "modules/invoice-email/lambda",
+            "source_file": null,
+            "type": "zip"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_email",
+      "mode": "data",
+      "type": "aws_partition",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "dns_suffix": "amazonaws.com",
+            "id": "aws",
+            "partition": "aws",
+            "reverse_dns_prefix": "com.amazonaws"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_email",
+      "mode": "managed",
+      "type": "aws_kms_key",
+      "name": "queue",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "dev",
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:kms:us-east-1:533595510771:key/0bea9be8-f892-48ad-811a-088067c1acd2",
+            "bypass_policy_lockout_safety_check": false,
+            "custom_key_store_id": "",
+            "customer_master_key_spec": "SYMMETRIC_DEFAULT",
+            "deletion_window_in_days": 30,
+            "description": "KMS key for smart-parking dev invoice email queue",
+            "enable_key_rotation": true,
+            "id": "0bea9be8-f892-48ad-811a-088067c1acd2",
+            "is_enabled": true,
+            "key_id": "0bea9be8-f892-48ad-811a-088067c1acd2",
+            "key_usage": "ENCRYPT_DECRYPT",
+            "multi_region": false,
+            "policy": "{\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::533595510771:root\"},\"Resource\":\"*\",\"Sid\":\"EnableAccountPermissions\"},{\"Action\":[\"kms:Decrypt\",\"kms:GenerateDataKey\"],\"Condition\":{\"ArnLike\":{\"aws:SourceArn\":\"arn:aws:s3:::smart-parking-dev-invoices-533595510771-us-east-1\"},\"StringEquals\":{\"aws:SourceAccount\":\"533595510771\"}},\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"s3.amazonaws.com\"},\"Resource\":\"*\",\"Sid\":\"AllowS3ToEncryptQueueMessages\"}],\"Version\":\"2012-10-17\"}",
+            "region": "us-east-1",
+            "rotation_period_in_days": 365,
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-invoice-email",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-invoice-email",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "xks_key_id": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "0bea9be8-f892-48ad-811a-088067c1acd2",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDB9fQ==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_email.data.aws_partition.current",
+            "module.invoice_storage.aws_s3_bucket.invoice"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_email",
+      "mode": "managed",
+      "type": "terraform_data",
+      "name": "validate_sender",
+      "provider": "provider[\"terraform.io/builtin/terraform\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 0,
+          "attributes": {
+            "id": "527260fd-5b52-e6a2-2176-fe970c166547",
+            "input": null,
+            "output": null,
+            "triggers_replace": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_storage",
+      "mode": "managed",
+      "type": "aws_kms_key",
+      "name": "invoice",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "dev",
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:kms:us-east-1:533595510771:key/cca72410-9c72-40c0-9184-0b1feda970ed",
+            "bypass_policy_lockout_safety_check": false,
+            "custom_key_store_id": "",
+            "customer_master_key_spec": "SYMMETRIC_DEFAULT",
+            "deletion_window_in_days": 30,
+            "description": "KMS key for smart-parking dev payment invoices",
+            "enable_key_rotation": true,
+            "id": "cca72410-9c72-40c0-9184-0b1feda970ed",
+            "is_enabled": true,
+            "key_id": "cca72410-9c72-40c0-9184-0b1feda970ed",
+            "key_usage": "ENCRYPT_DECRYPT",
+            "multi_region": false,
+            "policy": "{\"Id\":\"key-default-1\",\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::533595510771:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}",
+            "region": "us-east-1",
+            "rotation_period_in_days": 365,
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-invoices",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-invoices",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "xks_key_id": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "cca72410-9c72-40c0-9184-0b1feda970ed",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDB9fQ=="
+        },
+        {
+          "index_key": "prod",
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:kms:us-east-1:533595510771:key/05946355-dc0e-4600-ba21-3cd264c079d4",
+            "bypass_policy_lockout_safety_check": false,
+            "custom_key_store_id": "",
+            "customer_master_key_spec": "SYMMETRIC_DEFAULT",
+            "deletion_window_in_days": 30,
+            "description": "KMS key for smart-parking prod payment invoices",
+            "enable_key_rotation": true,
+            "id": "05946355-dc0e-4600-ba21-3cd264c079d4",
+            "is_enabled": true,
+            "key_id": "05946355-dc0e-4600-ba21-3cd264c079d4",
+            "key_usage": "ENCRYPT_DECRYPT",
+            "multi_region": false,
+            "policy": "{\"Id\":\"key-default-1\",\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::533595510771:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}",
+            "region": "us-east-1",
+            "rotation_period_in_days": 365,
+            "tags": {
+              "Environment": "prod",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-prod-invoices",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "prod",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-prod-invoices",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "xks_key_id": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "05946355-dc0e-4600-ba21-3cd264c079d4",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDB9fQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "invoice",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "dev",
+          "schema_version": 0,
+          "attributes": {
+            "acceleration_status": "",
+            "acl": null,
+            "arn": "arn:aws:s3:::smart-parking-dev-invoices-533595510771-us-east-1",
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "bucket_domain_name": "smart-parking-dev-invoices-533595510771-us-east-1.s3.amazonaws.com",
+            "bucket_namespace": "global",
+            "bucket_prefix": "",
+            "bucket_region": "us-east-1",
+            "bucket_regional_domain_name": "smart-parking-dev-invoices-533595510771-us-east-1.s3.us-east-1.amazonaws.com",
+            "cors_rule": [],
+            "force_destroy": false,
+            "grant": [
+              {
+                "id": "24b3a6bbdacc17e55fa2b2a59a53da95d4bfe81d868610374f4688587b0831e9",
+                "permissions": [
+                  "FULL_CONTROL"
+                ],
+                "type": "CanonicalUser",
+                "uri": ""
+              }
+            ],
+            "hosted_zone_id": "Z3AQBSTGFYJSTF",
+            "id": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "lifecycle_rule": [],
+            "logging": [],
+            "object_lock_configuration": [],
+            "object_lock_enabled": false,
+            "policy": "",
+            "region": "us-east-1",
+            "replication_configuration": [],
+            "request_payer": "BucketOwner",
+            "server_side_encryption_configuration": [
+              {
+                "rule": [
+                  {
+                    "apply_server_side_encryption_by_default": [
+                      {
+                        "kms_master_key_id": "",
+                        "sse_algorithm": "AES256"
+                      }
+                    ],
+                    "bucket_key_enabled": false
+                  }
+                ]
+              }
+            ],
+            "tags": {
+              "DataType": "PaymentInvoices",
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-invoices-533595510771-us-east-1",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "DataType": "PaymentInvoices",
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-invoices-533595510771-us-east-1",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "versioning": [
+              {
+                "enabled": false,
+                "mfa_delete": false
+              }
+            ],
+            "website": [],
+            "website_domain": null,
+            "website_endpoint": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjM2MDAwMDAwMDAwMDAsInJlYWQiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_caller_identity.current"
+          ]
+        },
+        {
+          "index_key": "prod",
+          "schema_version": 0,
+          "attributes": {
+            "acceleration_status": "",
+            "acl": null,
+            "arn": "arn:aws:s3:::smart-parking-prod-invoices-533595510771-us-east-1",
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "bucket_domain_name": "smart-parking-prod-invoices-533595510771-us-east-1.s3.amazonaws.com",
+            "bucket_namespace": "global",
+            "bucket_prefix": "",
+            "bucket_region": "us-east-1",
+            "bucket_regional_domain_name": "smart-parking-prod-invoices-533595510771-us-east-1.s3.us-east-1.amazonaws.com",
+            "cors_rule": [],
+            "force_destroy": false,
+            "grant": [
+              {
+                "id": "24b3a6bbdacc17e55fa2b2a59a53da95d4bfe81d868610374f4688587b0831e9",
+                "permissions": [
+                  "FULL_CONTROL"
+                ],
+                "type": "CanonicalUser",
+                "uri": ""
+              }
+            ],
+            "hosted_zone_id": "Z3AQBSTGFYJSTF",
+            "id": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "lifecycle_rule": [],
+            "logging": [],
+            "object_lock_configuration": [],
+            "object_lock_enabled": false,
+            "policy": "",
+            "region": "us-east-1",
+            "replication_configuration": [],
+            "request_payer": "BucketOwner",
+            "server_side_encryption_configuration": [
+              {
+                "rule": [
+                  {
+                    "apply_server_side_encryption_by_default": [
+                      {
+                        "kms_master_key_id": "",
+                        "sse_algorithm": "AES256"
+                      }
+                    ],
+                    "bucket_key_enabled": false
+                  }
+                ]
+              }
+            ],
+            "tags": {
+              "DataType": "PaymentInvoices",
+              "Environment": "prod",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-prod-invoices-533595510771-us-east-1",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "DataType": "PaymentInvoices",
+              "Environment": "prod",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-prod-invoices-533595510771-us-east-1",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "versioning": [
+              {
+                "enabled": false,
+                "mfa_delete": false
+              }
+            ],
+            "website": [],
+            "website_domain": null,
+            "website_endpoint": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjM2MDAwMDAwMDAwMDAsInJlYWQiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket_ownership_controls",
+      "name": "invoice",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "dev",
+          "schema_version": 0,
+          "attributes": {
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "id": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "region": "us-east-1",
+            "rule": [
+              {
+                "object_ownership": "BucketOwnerEnforced"
+              }
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_s3_bucket.invoice"
+          ]
+        },
+        {
+          "index_key": "prod",
+          "schema_version": 0,
+          "attributes": {
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "id": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "region": "us-east-1",
+            "rule": [
+              {
+                "object_ownership": "BucketOwnerEnforced"
+              }
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_s3_bucket.invoice"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket_policy",
+      "name": "invoice",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "dev",
+          "schema_version": 0,
+          "attributes": {
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "id": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "policy": "{\"Statement\":[{\"Action\":\"s3:*\",\"Condition\":{\"Bool\":{\"aws:SecureTransport\":\"false\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":[\"arn:aws:s3:::smart-parking-dev-invoices-533595510771-us-east-1\",\"arn:aws:s3:::smart-parking-dev-invoices-533595510771-us-east-1/*\"],\"Sid\":\"DenyInsecureTransport\"},{\"Action\":\"s3:PutObject\",\"Condition\":{\"StringNotEquals\":{\"s3:x-amz-server-side-encryption\":\"aws:kms\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::smart-parking-dev-invoices-533595510771-us-east-1/*\",\"Sid\":\"DenyUploadsWithoutKMSEncryption\"}],\"Version\":\"2012-10-17\"}",
+            "region": "us-east-1"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_s3_bucket.invoice",
+            "module.invoice_storage.aws_s3_bucket_public_access_block.invoice"
+          ]
+        },
+        {
+          "index_key": "prod",
+          "schema_version": 0,
+          "attributes": {
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "id": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "policy": "{\"Statement\":[{\"Action\":\"s3:*\",\"Condition\":{\"Bool\":{\"aws:SecureTransport\":\"false\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":[\"arn:aws:s3:::smart-parking-prod-invoices-533595510771-us-east-1\",\"arn:aws:s3:::smart-parking-prod-invoices-533595510771-us-east-1/*\"],\"Sid\":\"DenyInsecureTransport\"},{\"Action\":\"s3:PutObject\",\"Condition\":{\"StringNotEquals\":{\"s3:x-amz-server-side-encryption\":\"aws:kms\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"arn:aws:s3:::smart-parking-prod-invoices-533595510771-us-east-1/*\",\"Sid\":\"DenyUploadsWithoutKMSEncryption\"}],\"Version\":\"2012-10-17\"}",
+            "region": "us-east-1"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_s3_bucket.invoice",
+            "module.invoice_storage.aws_s3_bucket_public_access_block.invoice"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket_public_access_block",
+      "name": "invoice",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "dev",
+          "schema_version": 0,
+          "attributes": {
+            "block_public_acls": true,
+            "block_public_policy": true,
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "id": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "ignore_public_acls": true,
+            "region": "us-east-1",
+            "restrict_public_buckets": true,
+            "skip_destroy": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_s3_bucket.invoice"
+          ]
+        },
+        {
+          "index_key": "prod",
+          "schema_version": 0,
+          "attributes": {
+            "block_public_acls": true,
+            "block_public_policy": true,
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "id": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "ignore_public_acls": true,
+            "region": "us-east-1",
+            "restrict_public_buckets": true,
+            "skip_destroy": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_s3_bucket.invoice"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket_server_side_encryption_configuration",
+      "name": "invoice",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "dev",
+          "schema_version": 0,
+          "attributes": {
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "expected_bucket_owner": "",
+            "id": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "region": "us-east-1",
+            "rule": [
+              {
+                "apply_server_side_encryption_by_default": [
+                  {
+                    "kms_master_key_id": "arn:aws:kms:us-east-1:533595510771:key/cca72410-9c72-40c0-9184-0b1feda970ed",
+                    "sse_algorithm": "aws:kms"
+                  }
+                ],
+                "blocked_encryption_types": [
+                  "SSE-C"
+                ],
+                "bucket_key_enabled": true
+              }
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_kms_key.invoice",
+            "module.invoice_storage.aws_s3_bucket.invoice"
+          ]
+        },
+        {
+          "index_key": "prod",
+          "schema_version": 0,
+          "attributes": {
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "expected_bucket_owner": "",
+            "id": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "region": "us-east-1",
+            "rule": [
+              {
+                "apply_server_side_encryption_by_default": [
+                  {
+                    "kms_master_key_id": "arn:aws:kms:us-east-1:533595510771:key/05946355-dc0e-4600-ba21-3cd264c079d4",
+                    "sse_algorithm": "aws:kms"
+                  }
+                ],
+                "blocked_encryption_types": [
+                  "SSE-C"
+                ],
+                "bucket_key_enabled": true
+              }
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_kms_key.invoice",
+            "module.invoice_storage.aws_s3_bucket.invoice"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.invoice_storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket_versioning",
+      "name": "invoice",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "dev",
+          "schema_version": 0,
+          "attributes": {
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "expected_bucket_owner": "",
+            "id": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "mfa": null,
+            "region": "us-east-1",
+            "versioning_configuration": [
+              {
+                "mfa_delete": "Disabled",
+                "status": "Enabled"
+              }
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-dev-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_s3_bucket.invoice"
+          ]
+        },
+        {
+          "index_key": "prod",
+          "schema_version": 0,
+          "attributes": {
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "expected_bucket_owner": "",
+            "id": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "mfa": null,
+            "region": "us-east-1",
+            "versioning_configuration": [
+              {
+                "mfa_delete": "Disabled",
+                "status": "Enabled"
+              }
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "account_id": "533595510771",
+            "bucket": "smart-parking-prod-invoices-533595510771-us-east-1",
+            "region": "us-east-1"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "data.aws_caller_identity.current",
+            "module.invoice_storage.aws_s3_bucket.invoice"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.sqs",
+      "mode": "managed",
+      "type": "aws_kms_key",
+      "name": "sqs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "dev",
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:kms:us-east-1:533595510771:key/45a23eed-923a-495c-9aaa-512d07dbfbc0",
+            "bypass_policy_lockout_safety_check": false,
+            "custom_key_store_id": "",
+            "customer_master_key_spec": "SYMMETRIC_DEFAULT",
+            "deletion_window_in_days": 30,
+            "description": "KMS key for smart-parking dev SQS queues",
+            "enable_key_rotation": true,
+            "id": "45a23eed-923a-495c-9aaa-512d07dbfbc0",
+            "is_enabled": true,
+            "key_id": "45a23eed-923a-495c-9aaa-512d07dbfbc0",
+            "key_usage": "ENCRYPT_DECRYPT",
+            "multi_region": false,
+            "policy": "{\"Id\":\"key-default-1\",\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::533595510771:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}",
+            "region": "us-east-1",
+            "rotation_period_in_days": 365,
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-sqs",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-sqs",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "xks_key_id": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "45a23eed-923a-495c-9aaa-512d07dbfbc0",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDB9fQ=="
+        },
+        {
+          "index_key": "prod",
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:kms:us-east-1:533595510771:key/985adc64-5166-4ed4-85ae-d29f9928f3c0",
+            "bypass_policy_lockout_safety_check": false,
+            "custom_key_store_id": "",
+            "customer_master_key_spec": "SYMMETRIC_DEFAULT",
+            "deletion_window_in_days": 30,
+            "description": "KMS key for smart-parking prod SQS queues",
+            "enable_key_rotation": true,
+            "id": "985adc64-5166-4ed4-85ae-d29f9928f3c0",
+            "is_enabled": true,
+            "key_id": "985adc64-5166-4ed4-85ae-d29f9928f3c0",
+            "key_usage": "ENCRYPT_DECRYPT",
+            "multi_region": false,
+            "policy": "{\"Id\":\"key-default-1\",\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::533595510771:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}",
+            "region": "us-east-1",
+            "rotation_period_in_days": 365,
+            "tags": {
+              "Environment": "prod",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-prod-sqs",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "prod",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-prod-sqs",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "xks_key_id": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "985adc64-5166-4ed4-85ae-d29f9928f3c0",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDB9fQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_eip",
+      "name": "nat",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 0,
+          "attributes": {
+            "address": null,
+            "allocation_id": "eipalloc-0bd49d3f71cbff53f",
+            "arn": "arn:aws:ec2:us-east-1:533595510771:elastic-ip/eipalloc-0bd49d3f71cbff53f",
+            "associate_with_private_ip": null,
+            "association_id": "",
+            "carrier_ip": "",
+            "customer_owned_ip": "",
+            "customer_owned_ipv4_pool": "",
+            "domain": "vpc",
+            "id": "eipalloc-0bd49d3f71cbff53f",
+            "instance": "",
+            "ipam_pool_id": "",
+            "network_border_group": "us-east-1",
+            "network_interface": "",
+            "private_dns": "",
+            "private_ip": "",
+            "ptr_record": "",
+            "public_dns": "ec2-18-213-158-90.compute-1.amazonaws.com",
+            "public_ip": "18.213.158.90",
+            "public_ipv4_pool": "amazon",
+            "region": "us-east-1",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-nat-eip-1",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-nat-eip-1",
+              "Project": "smart-parking"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "eipalloc-0bd49d3f71cbff53f",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiZGVsZXRlIjoxODAwMDAwMDAwMDAsInJlYWQiOjkwMDAwMDAwMDAwMCwidXBkYXRlIjozMDAwMDAwMDAwMDB9fQ==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 0,
+          "attributes": {
+            "address": null,
+            "allocation_id": "eipalloc-06122753ee574e11a",
+            "arn": "arn:aws:ec2:us-east-1:533595510771:elastic-ip/eipalloc-06122753ee574e11a",
+            "associate_with_private_ip": null,
+            "association_id": "",
+            "carrier_ip": "",
+            "customer_owned_ip": "",
+            "customer_owned_ipv4_pool": "",
+            "domain": "vpc",
+            "id": "eipalloc-06122753ee574e11a",
+            "instance": "",
+            "ipam_pool_id": "",
+            "network_border_group": "us-east-1",
+            "network_interface": "",
+            "private_dns": "",
+            "private_ip": "",
+            "ptr_record": "",
+            "public_dns": "ec2-44-193-27-20.compute-1.amazonaws.com",
+            "public_ip": "44.193.27.20",
+            "public_ipv4_pool": "amazon",
+            "region": "us-east-1",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-nat-eip-2",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-nat-eip-2",
+              "Project": "smart-parking"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "eipalloc-06122753ee574e11a",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiZGVsZXRlIjoxODAwMDAwMDAwMDAsInJlYWQiOjkwMDAwMDAwMDAwMCwidXBkYXRlIjozMDAwMDAwMDAwMDB9fQ==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_internet_gateway",
+      "name": "this",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:533595510771:internet-gateway/igw-07fb823312e3d31f3",
+            "id": "igw-07fb823312e3d31f3",
+            "owner_id": "533595510771",
+            "region": "us-east-1",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-igw",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-igw",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0ca84820e7fe5273f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "igw-07fb823312e3d31f3",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_nat_gateway",
+      "name": "this",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 0,
+          "attributes": {
+            "allocation_id": "eipalloc-0bd49d3f71cbff53f",
+            "association_id": "eipassoc-071eb47b8bee38d58",
+            "auto_provision_zones": null,
+            "auto_scaling_ips": null,
+            "availability_mode": "zonal",
+            "availability_zone_address": [],
+            "connectivity_type": "public",
+            "id": "nat-0981e91ff94da9c99",
+            "network_interface_id": "eni-0f9c464050967cf32",
+            "private_ip": "10.0.1.151",
+            "public_ip": "18.213.158.90",
+            "region": "us-east-1",
+            "regional_nat_gateway_address": [],
+            "regional_nat_gateway_auto_mode": null,
+            "route_table_id": null,
+            "secondary_allocation_ids": [],
+            "secondary_private_ip_address_count": 0,
+            "secondary_private_ip_addresses": [],
+            "subnet_id": "subnet-07c05c29011e70e65",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-nat-1",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-nat-1",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0ca84820e7fe5273f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "nat-0981e91ff94da9c99",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTgwMDAwMDAwMDAwMCwidXBkYXRlIjo2MDAwMDAwMDAwMDB9fQ==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 0,
+          "attributes": {
+            "allocation_id": "eipalloc-06122753ee574e11a",
+            "association_id": "eipassoc-0cd8f55eb0c4526da",
+            "auto_provision_zones": null,
+            "auto_scaling_ips": null,
+            "availability_mode": "zonal",
+            "availability_zone_address": [],
+            "connectivity_type": "public",
+            "id": "nat-07d2d29c429958036",
+            "network_interface_id": "eni-079b9dabfdf4be9c3",
+            "private_ip": "10.0.2.41",
+            "public_ip": "44.193.27.20",
+            "region": "us-east-1",
+            "regional_nat_gateway_address": [],
+            "regional_nat_gateway_auto_mode": null,
+            "route_table_id": null,
+            "secondary_allocation_ids": [],
+            "secondary_private_ip_address_count": 0,
+            "secondary_private_ip_addresses": [],
+            "subnet_id": "subnet-0e72a44e0bbd468ff",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-nat-2",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-nat-2",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0ca84820e7fe5273f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "nat-07d2d29c429958036",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTgwMDAwMDAwMDAwMCwidXBkYXRlIjo2MDAwMDAwMDAwMDB9fQ==",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "private",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:533595510771:route-table/rtb-026b5cb4dc4caace9",
+            "id": "rtb-026b5cb4dc4caace9",
+            "owner_id": "533595510771",
+            "propagating_vgws": [],
+            "region": "us-east-1",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "nat-0981e91ff94da9c99",
+                "network_interface_id": "",
+                "odb_network_arn": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-private-rt-us-east-1a",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-private-rt-us-east-1a",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0ca84820e7fe5273f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "rtb-026b5cb4dc4caace9",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:533595510771:route-table/rtb-01a687f73f1da699d",
+            "id": "rtb-01a687f73f1da699d",
+            "owner_id": "533595510771",
+            "propagating_vgws": [],
+            "region": "us-east-1",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "nat-07d2d29c429958036",
+                "network_interface_id": "",
+                "odb_network_arn": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-private-rt-us-east-1b",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-private-rt-us-east-1b",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0ca84820e7fe5273f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "rtb-01a687f73f1da699d",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "public",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:533595510771:route-table/rtb-0ca17974afda789f7",
+            "id": "rtb-0ca17974afda789f7",
+            "owner_id": "533595510771",
+            "propagating_vgws": [],
+            "region": "us-east-1",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "igw-07fb823312e3d31f3",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "",
+                "network_interface_id": "",
+                "odb_network_arn": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-public-rt",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-public-rt",
+              "Project": "smart-parking"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0ca84820e7fe5273f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "rtb-0ca17974afda789f7",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "private",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-0e0802d82e605a42b",
+            "region": "us-east-1",
+            "route_table_id": "rtb-026b5cb4dc4caace9",
+            "subnet_id": "subnet-0f9cc6fdefe1947f8",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "rtbassoc-0e0802d82e605a42b",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-044ad1520294948c0",
+            "region": "us-east-1",
+            "route_table_id": "rtb-01a687f73f1da699d",
+            "subnet_id": "subnet-0f54426f93dfd58f6",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "rtbassoc-044ad1520294948c0",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_eip.nat",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_nat_gateway.this",
+            "module.vpc.aws_route_table.private",
+            "module.vpc.aws_subnet.private",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "public",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-03d0c2de2e2de399f",
+            "region": "us-east-1",
+            "route_table_id": "rtb-0ca17974afda789f7",
+            "subnet_id": "subnet-07c05c29011e70e65",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "rtbassoc-03d0c2de2e2de399f",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-0a40982d11a10598c",
+            "region": "us-east-1",
+            "route_table_id": "rtb-0ca17974afda789f7",
+            "subnet_id": "subnet-0e72a44e0bbd468ff",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "rtbassoc-0a40982d11a10598c",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_internet_gateway.this",
+            "module.vpc.aws_route_table.public",
+            "module.vpc.aws_subnet.public",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "private",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:533595510771:subnet/subnet-0f9cc6fdefe1947f8",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1a",
+            "availability_zone_id": "use1-az1",
+            "cidr_block": "10.0.11.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0f9cc6fdefe1947f8",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_ipam_pool_id": null,
+            "ipv6_native": false,
+            "ipv6_netmask_length": null,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": false,
+            "outpost_arn": "",
+            "owner_id": "533595510771",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-east-1",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-private-us-east-1a",
+              "Project": "smart-parking",
+              "kubernetes.io/cluster/smart-parking-dev-eks": "shared",
+              "kubernetes.io/role/internal-elb": "1"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-private-us-east-1a",
+              "Project": "smart-parking",
+              "kubernetes.io/cluster/smart-parking-dev-eks": "shared",
+              "kubernetes.io/role/internal-elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0ca84820e7fe5273f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "subnet-0f9cc6fdefe1947f8",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:533595510771:subnet/subnet-0f54426f93dfd58f6",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1b",
+            "availability_zone_id": "use1-az2",
+            "cidr_block": "10.0.12.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0f54426f93dfd58f6",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_ipam_pool_id": null,
+            "ipv6_native": false,
+            "ipv6_netmask_length": null,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": false,
+            "outpost_arn": "",
+            "owner_id": "533595510771",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-east-1",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-private-us-east-1b",
+              "Project": "smart-parking",
+              "kubernetes.io/cluster/smart-parking-dev-eks": "shared",
+              "kubernetes.io/role/internal-elb": "1"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-private-us-east-1b",
+              "Project": "smart-parking",
+              "kubernetes.io/cluster/smart-parking-dev-eks": "shared",
+              "kubernetes.io/role/internal-elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0ca84820e7fe5273f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "subnet-0f54426f93dfd58f6",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "public",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:533595510771:subnet/subnet-07c05c29011e70e65",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1a",
+            "availability_zone_id": "use1-az1",
+            "cidr_block": "10.0.1.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-07c05c29011e70e65",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_ipam_pool_id": null,
+            "ipv6_native": false,
+            "ipv6_netmask_length": null,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "533595510771",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-east-1",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-public-us-east-1a",
+              "Project": "smart-parking",
+              "kubernetes.io/cluster/smart-parking-dev-eks": "shared",
+              "kubernetes.io/role/elb": "1"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-public-us-east-1a",
+              "Project": "smart-parking",
+              "kubernetes.io/cluster/smart-parking-dev-eks": "shared",
+              "kubernetes.io/role/elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0ca84820e7fe5273f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "subnet-07c05c29011e70e65",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_vpc.this"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:533595510771:subnet/subnet-0e72a44e0bbd468ff",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1b",
+            "availability_zone_id": "use1-az2",
+            "cidr_block": "10.0.2.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0e72a44e0bbd468ff",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_ipam_pool_id": null,
+            "ipv6_native": false,
+            "ipv6_netmask_length": null,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "533595510771",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-east-1",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-public-us-east-1b",
+              "Project": "smart-parking",
+              "kubernetes.io/cluster/smart-parking-dev-eks": "shared",
+              "kubernetes.io/role/elb": "1"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-public-us-east-1b",
+              "Project": "smart-parking",
+              "kubernetes.io/cluster/smart-parking-dev-eks": "shared",
+              "kubernetes.io/role/elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0ca84820e7fe5273f"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "subnet-0e72a44e0bbd468ff",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "data.aws_availability_zones.available",
+            "module.vpc.aws_vpc.this"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.vpc",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "this",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:533595510771:vpc/vpc-0ca84820e7fe5273f",
+            "assign_generated_ipv6_cidr_block": false,
+            "cidr_block": "10.0.0.0/16",
+            "default_network_acl_id": "acl-020c0ac3220343665",
+            "default_route_table_id": "rtb-076f4b6be40e22ed5",
+            "default_security_group_id": "sg-0a528f78fa691d287",
+            "dhcp_options_id": "dopt-0177cf344c5934501",
+            "enable_dns_hostnames": true,
+            "enable_dns_support": true,
+            "enable_network_address_usage_metrics": false,
+            "id": "vpc-0ca84820e7fe5273f",
+            "instance_tenancy": "default",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_network_border_group": "",
+            "ipv6_ipam_pool_id": "",
+            "ipv6_netmask_length": 0,
+            "main_route_table_id": "rtb-076f4b6be40e22ed5",
+            "owner_id": "533595510771",
+            "region": "us-east-1",
+            "tags": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-vpc",
+              "Project": "smart-parking"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "ManagedBy": "Terraform",
+              "Name": "smart-parking-dev-vpc",
+              "Project": "smart-parking"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "533595510771",
+            "id": "vpc-0ca84820e7fe5273f",
+            "region": "us-east-1"
+          },
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    }
+  ],
+  "check_results": [
+    {
+      "object_kind": "var",
+      "config_addr": "var.node_capacity_type",
+      "status": "pass",
+      "objects": [
+        {
+          "object_addr": "var.node_capacity_type",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "object_kind": "resource",
+      "config_addr": "module.invoice_email.terraform_data.validate_sender",
+      "status": "pass",
+      "objects": [
+        {
+          "object_addr": "module.invoice_email.terraform_data.validate_sender[0]",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "object_kind": "var",
+      "config_addr": "module.vpc.var.availability_zones",
+      "status": "pass",
+      "objects": [
+        {
+          "object_addr": "module.vpc.var.availability_zones",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "object_kind": "resource",
+      "config_addr": "module.eks.aws_eks_node_group.general",
+      "status": "pass",
+      "objects": [
+        {
+          "object_addr": "module.eks.aws_eks_node_group.general",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "object_kind": "var",
+      "config_addr": "var.public_subnet_cidrs",
+      "status": "pass",
+      "objects": [
+        {
+          "object_addr": "var.public_subnet_cidrs",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "object_kind": "var",
+      "config_addr": "var.invoice_email_environments",
+      "status": "pass",
+      "objects": [
+        {
+          "object_addr": "var.invoice_email_environments",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "object_kind": "var",
+      "config_addr": "var.private_subnet_cidrs",
+      "status": "pass",
+      "objects": [
+        {
+          "object_addr": "var.private_subnet_cidrs",
+          "status": "pass"
+        }
+      ]
+    }
+  ]
+}
+

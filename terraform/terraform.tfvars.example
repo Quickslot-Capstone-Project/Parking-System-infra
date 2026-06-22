@@ -1,0 +1,19 @@
+environment = "dev"
+
+# false = one NAT gateway per AZ (recommended for resilience)
+# true  = one shared NAT gateway (cheaper for a short-lived demo)
+single_nat_gateway = false
+
+# Restrict this to your public IP/32 when possible.
+endpoint_public_access_cidrs = ["0.0.0.0/0"]
+
+node_instance_types = ["t3.medium"]
+node_capacity_type  = "ON_DEMAND"
+node_desired_size   = 2
+node_min_size       = 2
+node_max_size       = 4
+
+# Invoice email delivery is intentionally off. Start with ["dev"], verify it,
+# and only then use ["dev", "prod"].
+invoice_email_environments = []
+invoice_email_sender       = "nimeshsv814@gmail.com"
