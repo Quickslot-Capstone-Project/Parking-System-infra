@@ -77,3 +77,23 @@ output "invoice_email_lambda_names" {
   value       = module.invoice_email.lambda_names
   description = "Dev and prod invoice email Lambda names. Empty while delivery is disabled."
 }
+
+output "application_secrets_manager_secret_name" {
+  value       = aws_secretsmanager_secret.application.name
+  description = "Stable AWS Secrets Manager secret name to set as APPLICATION_SECRETS_MANAGER_SECRET_ID for backend services."
+}
+
+output "application_secrets_manager_secret_arn" {
+  value       = aws_secretsmanager_secret.application.arn
+  description = "AWS Secrets Manager secret ARN readable by the application Pod Identity role."
+}
+
+output "payment_secrets_manager_secret_name" {
+  value       = aws_secretsmanager_secret.application.name
+  description = "Backward-compatible alias for application_secrets_manager_secret_name."
+}
+
+output "payment_secrets_manager_secret_arn" {
+  value       = aws_secretsmanager_secret.application.arn
+  description = "Backward-compatible alias for application_secrets_manager_secret_arn."
+}

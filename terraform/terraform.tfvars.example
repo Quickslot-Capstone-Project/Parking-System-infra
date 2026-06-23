@@ -17,3 +17,11 @@ node_max_size       = 4
 # and only then use ["dev", "prod"].
 invoice_email_environments = []
 invoice_email_sender       = "nimeshsv814@gmail.com"
+
+# Optional. Null keeps a stable deterministic name:
+# smart-parking-dev-application-secrets
+application_secrets_manager_secret_name = null
+
+# 0 force-deletes the secret on terraform destroy so the same name can be
+# recreated immediately on the next apply. Use 7-30 for a recovery window.
+application_secrets_recovery_window_in_days = 0

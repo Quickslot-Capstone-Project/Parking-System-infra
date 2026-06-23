@@ -138,3 +138,47 @@ variable "invoice_email_sender" {
   type        = string
   default     = ""
 }
+
+variable "application_secrets_manager_secret_name" {
+  description = "Stable AWS Secrets Manager secret name for all backend service sensitive configuration. Null uses <project>-<environment>-application-secrets."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
+variable "application_secrets_recovery_window_in_days" {
+  description = "Recovery window for the application secret. Null uses payment_secrets_recovery_window_in_days for backward compatibility."
+  type        = number
+  default     = null
+  nullable    = true
+
+  validation {
+    condition = (
+      var.application_secrets_recovery_window_in_days == null ||
+      var.application_secrets_recovery_window_in_days == 0 ||
+      (
+        var.application_secrets_recovery_window_in_days >= 7 &&
+        var.application_secrets_recovery_window_in_days <= 30
+      )
+    )
+    error_message = "application_secrets_recovery_window_in_days must be null, 0, or between 7 and 30."
+  }
+}
+
+variable "payment_secrets_manager_secret_name" {
+  description = "Deprecated alias. Use application_secrets_manager_secret_name. If set, it overrides the default application secret name."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
+variable "payment_secrets_recovery_window_in_days" {
+  description = "Deprecated alias. Use application_secrets_recovery_window_in_days. Use 0 for force-delete on terraform destroy so the same name can be recreated immediately."
+  type        = number
+  default     = 0
+
+  validation {
+    condition     = var.payment_secrets_recovery_window_in_days == 0 || (var.payment_secrets_recovery_window_in_days >= 7 && var.payment_secrets_recovery_window_in_days <= 30)
+    error_message = "payment_secrets_recovery_window_in_days must be 0 or between 7 and 30."
+  }
+}
