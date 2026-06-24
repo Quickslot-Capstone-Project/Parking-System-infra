@@ -182,3 +182,58 @@ variable "payment_secrets_recovery_window_in_days" {
     error_message = "payment_secrets_recovery_window_in_days must be 0 or between 7 and 30."
   }
 }
+
+variable "route53_zone_enabled" {
+  description = "Create a standalone Route53 public hosted zone for domain_name. This is not connected to the current ALB unless alias records are explicitly enabled."
+  type        = bool
+  default     = true
+}
+
+variable "domain_name" {
+  description = "Public domain name for the standalone Route53 zone."
+  type        = string
+  default     = "quickslot.site"
+}
+
+variable "edge_enabled" {
+  description = "Create CloudFront, WAF, and Route53 alias records for the production application."
+  type        = bool
+  default     = true
+}
+
+variable "prod_alb_name" {
+  description = "Existing production ALB name created by the Kubernetes Ingress. Used only when prod_alb_dns_name is null."
+  type        = string
+  default     = "smart-parking-prod-alb"
+}
+
+variable "prod_alb_dns_name" {
+  description = "Existing production ALB DNS name from the Kubernetes Ingress. Set this when Terraform cannot find the ALB by name."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
+variable "cloudfront_certificate_domain_name" {
+  description = "Issued ACM certificate domain name in us-east-1 for the CloudFront alias. Null uses domain_name."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
+variable "cloudfront_aliases" {
+  description = "DNS names served by CloudFront. Empty uses domain_name."
+  type        = list(string)
+  default     = []
+}
+
+variable "cloudfront_origin_protocol_policy" {
+  description = "Protocol CloudFront uses to connect to the ALB origin."
+  type        = string
+  default     = "http-only"
+
+  validation {
+    condition     = contains(["http-only", "https-only", "match-viewer"], var.cloudfront_origin_protocol_policy)
+    error_message = "cloudfront_origin_protocol_policy must be http-only, https-only, or match-viewer."
+  }
+}

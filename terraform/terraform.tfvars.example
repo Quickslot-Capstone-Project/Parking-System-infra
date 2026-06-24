@@ -25,3 +25,22 @@ application_secrets_manager_secret_name = null
 # 0 force-deletes the secret on terraform destroy so the same name can be
 # recreated immediately on the next apply. Use 7-30 for a recovery window.
 application_secrets_recovery_window_in_days = 0
+
+# Route53 creates only the hosted zone by default. Copy the output
+# route53_name_servers to your registrar for quickslot.site.
+route53_zone_enabled = true
+domain_name          = "quickslot.site"
+
+# CloudFront + WAF exposes the prod application through quickslot.site.
+# The ACM certificate must be ISSUED in us-east-1 before apply.
+edge_enabled = true
+
+# Prefer the Ingress hostname because the real AWS ALB name may be different
+# from the Kubernetes Ingress name. Get it with:
+# kubectl get ingress smart-parking-prod-alb -n prod -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+prod_alb_dns_name = "replace-with-prod-alb-dns-name.elb.amazonaws.com"
+
+prod_alb_name                      = "smart-parking-prod-alb"
+cloudfront_certificate_domain_name = "quickslot.site"
+cloudfront_aliases                 = ["quickslot.site"]
+cloudfront_origin_protocol_policy  = "http-only"

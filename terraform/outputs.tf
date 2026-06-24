@@ -97,3 +97,33 @@ output "payment_secrets_manager_secret_arn" {
   value       = aws_secretsmanager_secret.application.arn
   description = "Backward-compatible alias for application_secrets_manager_secret_arn."
 }
+
+output "route53_zone_id" {
+  value       = var.route53_zone_enabled ? aws_route53_zone.public[0].zone_id : null
+  description = "Route53 public hosted zone ID for quickslot.site."
+}
+
+output "route53_name_servers" {
+  value       = var.route53_zone_enabled ? aws_route53_zone.public[0].name_servers : []
+  description = "Name servers to configure at the domain registrar for quickslot.site."
+}
+
+output "cloudfront_distribution_id" {
+  value       = var.edge_enabled ? aws_cloudfront_distribution.application[0].id : null
+  description = "CloudFront distribution ID for the production application."
+}
+
+output "cloudfront_domain_name" {
+  value       = var.edge_enabled ? aws_cloudfront_distribution.application[0].domain_name : null
+  description = "CloudFront distribution domain name."
+}
+
+output "cloudfront_aliases" {
+  value       = var.edge_enabled ? aws_cloudfront_distribution.application[0].aliases : []
+  description = "Public DNS aliases served by CloudFront."
+}
+
+output "cloudfront_waf_web_acl_arn" {
+  value       = var.edge_enabled ? aws_wafv2_web_acl.cloudfront[0].arn : null
+  description = "WAF web ACL ARN attached to CloudFront."
+}

@@ -13,6 +13,8 @@ This root module creates the complete development infrastructure in `us-east-1`:
 - AWS Load Balancer Controller IAM permissions and Pod Identity association.
 - Amazon Bedrock Nova Pro permission on the existing application Pod Identity role.
 - A stable AWS Secrets Manager secret for backend service sensitive runtime configuration.
+- A standalone Route53 public hosted zone for `quickslot.site`.
+- CloudFront, WAF, and a Route53 alias record exposing the prod ALB through `quickslot.site`.
 
 Terraform state is local as requested. Do not lose the `terraform.tfstate` file.
 
@@ -61,3 +63,42 @@ aws secretsmanager put-secret-value `
 Set backend service environment variable `APPLICATION_SECRETS_MANAGER_SECRET_ID` to the Terraform output `application_secrets_manager_secret_name`. Services still work with the existing `.env` flow when that variable is not set.
 
 By default, `application_secrets_recovery_window_in_days = 0`, so `terraform destroy` force-deletes this secret and a later `terraform apply` can recreate the same name immediately. Change it to `7` through `30` if you prefer AWS recovery protection.
+
+## Route53
+
+Terraform creates a separate Route53 public hosted zone for:
+
+```text
+quickslot.site
+```
+
+After apply, copy the `route53_name_servers` output into the domain registrar.
+
+## CloudFront and WAF
+
+Terraform uses the existing Kubernetes-created production ALB as the CloudFront
+origin. Prefer passing the Ingress hostname explicitly:
+
+```powershell
+kubectl get ingress smart-parking-prod-alb -n prod -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+```
+
+Set the result as:
+
+```hcl
+prod_alb_dns_name = "replace-with-prod-alb-dns-name.elb.amazonaws.com"
+```
+
+If `prod_alb_dns_name` is null, Terraform falls back to looking up the ALB by
+name:
+
+```text
+smart-parking-prod-alb
+```
+
+It then creates a CloudFront distribution with that ALB as the origin, attaches
+a WAF web ACL with AWS managed rules, and creates an `A` alias record for
+`quickslot.site` in the Route53 hosted zone.
+
+Before apply, confirm the ACM certificate for `quickslot.site` is issued in
+`us-east-1`; CloudFront requires the certificate in that region.
