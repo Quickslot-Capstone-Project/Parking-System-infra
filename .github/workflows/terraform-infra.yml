@@ -103,21 +103,35 @@ jobs:
         run: |
           : > ci.auto.tfvars
 
-          if [ -n "$DOMAIN_NAME" ]; then
-            echo "domain_name = \"$DOMAIN_NAME\"" >> ci.auto.tfvars
-          fi
+          clean_value() {
+            printf '%s' "$1" | tr -d '\r\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//'
+          }
 
-          if [ -n "$CLOUDFRONT_CERTIFICATE_DOMAIN_NAME" ]; then
-            echo "cloudfront_certificate_domain_name = \"$CLOUDFRONT_CERTIFICATE_DOMAIN_NAME\"" >> ci.auto.tfvars
-          fi
+          write_string_var() {
+            local name="$1"
+            local value
+            value="$(clean_value "$2")"
+            if [ -n "$value" ]; then
+              printf '%s = "%s"\n' "$name" "$value" >> ci.auto.tfvars
+            fi
+          }
 
-          if [ -n "$CLOUDFRONT_ALIASES" ]; then
-            echo "cloudfront_aliases = [$(printf '%s' "$CLOUDFRONT_ALIASES" | sed 's/,/","/g; s/^/"/; s/$/"/')]" >> ci.auto.tfvars
-          fi
+          write_list_var() {
+            local name="$1"
+            local value
+            value="$(clean_value "$2" | sed 's/[[:space:]]*,[[:space:]]*/","/g')"
+            if [ -n "$value" ]; then
+              printf '%s = ["%s"]\n' "$name" "$value" >> ci.auto.tfvars
+            fi
+          }
 
-          if [ -n "$PROD_ALB_NAME" ]; then
-            echo "prod_alb_name = \"$PROD_ALB_NAME\"" >> ci.auto.tfvars
-          fi
+          write_string_var "domain_name" "$DOMAIN_NAME"
+
+          write_string_var "cloudfront_certificate_domain_name" "$CLOUDFRONT_CERTIFICATE_DOMAIN_NAME"
+
+          write_list_var "cloudfront_aliases" "$CLOUDFRONT_ALIASES"
+
+          write_string_var "prod_alb_name" "$PROD_ALB_NAME"
 
           if [ -z "$PROD_ALB_DNS_NAME" ]; then
             PROD_ALB_DNS_NAME="$(
@@ -144,23 +158,21 @@ jobs:
             )"
           fi
 
+          PROD_ALB_DNS_NAME="$(clean_value "$PROD_ALB_DNS_NAME")"
+
           if [ -n "$PROD_ALB_DNS_NAME" ]; then
-            echo "prod_alb_dns_name = \"$PROD_ALB_DNS_NAME\"" >> ci.auto.tfvars
+            write_string_var "prod_alb_dns_name" "$PROD_ALB_DNS_NAME"
             echo "edge_enabled = true" >> ci.auto.tfvars
           elif [ -n "$EDGE_ENABLED" ]; then
-            echo "edge_enabled = $EDGE_ENABLED" >> ci.auto.tfvars
+            echo "edge_enabled = $(clean_value "$EDGE_ENABLED")" >> ci.auto.tfvars
           else
             echo "No ALB found for ingress.k8s.aws/stack=$PROD_INGRESS_STACK; disabling edge resources for this Terraform run."
             echo "edge_enabled = false" >> ci.auto.tfvars
           fi
 
-          if [ -n "$INVOICE_EMAIL_SENDER" ]; then
-            echo "invoice_email_sender = \"$INVOICE_EMAIL_SENDER\"" >> ci.auto.tfvars
-          fi
+          write_string_var "invoice_email_sender" "$INVOICE_EMAIL_SENDER"
 
-          if [ -n "$INVOICE_EMAIL_ENVIRONMENTS" ]; then
-            echo "invoice_email_environments = [$(printf '%s' "$INVOICE_EMAIL_ENVIRONMENTS" | sed 's/,/","/g; s/^/"/; s/$/"/')]" >> ci.auto.tfvars
-          fi
+          write_list_var "invoice_email_environments" "$INVOICE_EMAIL_ENVIRONMENTS"
 
       - name: Terraform init
         working-directory: terraform
