@@ -1,0 +1,176 @@
+name: Terraform Infra
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform-infra.yml"
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform-infra.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: terraform-infra-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+  TF_VERSION: ${{ vars.TF_VERSION || '1.12.2' }}
+  TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET || 'smart-parking-terraform-state-533595510771-us-east-1' }}
+  TF_STATE_KEY: ${{ vars.TF_STATE_KEY || 'smart-parking/dev/terraform.tfstate' }}
+  PROD_INGRESS_STACK: ${{ vars.PROD_INGRESS_STACK || 'prod/smart-parking-prod-alb' }}
+  TF_IN_AUTOMATION: true
+  TF_INPUT: false
+
+jobs:
+  terraform:
+    name: Bootstrap, Plan, and Apply
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          audience: sts.amazonaws.com
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Bootstrap remote state bucket
+        working-directory: terraform/bootstrap-backend
+        run: |
+          terraform init -input=false
+          terraform validate
+
+          if aws s3api head-bucket --bucket "$TF_STATE_BUCKET" 2>/dev/null; then
+            terraform import -input=false aws_s3_bucket.terraform_state "$TF_STATE_BUCKET" || true
+          elif [ "${{ github.event_name }}" != "push" ] || [ "${{ github.ref }}" != "refs/heads/master" ]; then
+            echo "Remote state bucket $TF_STATE_BUCKET does not exist yet. Merge to master once to let the workflow bootstrap it."
+            exit 1
+          fi
+
+          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/master" ]; then
+            terraform apply -input=false -auto-approve \
+              -var="state_bucket_name=$TF_STATE_BUCKET"
+          else
+            terraform plan -input=false \
+              -var="state_bucket_name=$TF_STATE_BUCKET"
+          fi
+
+      - name: Write backend config
+        working-directory: terraform
+        run: |
+          cat > backend.hcl <<EOF
+          bucket       = "$TF_STATE_BUCKET"
+          key          = "$TF_STATE_KEY"
+          region       = "$AWS_REGION"
+          encrypt      = true
+          use_lockfile = true
+          EOF
+
+      - name: Write CI Terraform variables
+        working-directory: terraform
+        env:
+          DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
+          CLOUDFRONT_CERTIFICATE_DOMAIN_NAME: ${{ vars.CLOUDFRONT_CERTIFICATE_DOMAIN_NAME }}
+          CLOUDFRONT_ALIASES: ${{ vars.CLOUDFRONT_ALIASES }}
+          PROD_ALB_NAME: ${{ vars.PROD_ALB_NAME }}
+          PROD_ALB_DNS_NAME: ${{ vars.PROD_ALB_DNS_NAME }}
+          EDGE_ENABLED: ${{ vars.EDGE_ENABLED }}
+          INVOICE_EMAIL_SENDER: ${{ vars.INVOICE_EMAIL_SENDER }}
+          INVOICE_EMAIL_ENVIRONMENTS: ${{ vars.INVOICE_EMAIL_ENVIRONMENTS }}
+        run: |
+          : > ci.auto.tfvars
+
+          if [ -n "$DOMAIN_NAME" ]; then
+            echo "domain_name = \"$DOMAIN_NAME\"" >> ci.auto.tfvars
+          fi
+
+          if [ -n "$CLOUDFRONT_CERTIFICATE_DOMAIN_NAME" ]; then
+            echo "cloudfront_certificate_domain_name = \"$CLOUDFRONT_CERTIFICATE_DOMAIN_NAME\"" >> ci.auto.tfvars
+          fi
+
+          if [ -n "$CLOUDFRONT_ALIASES" ]; then
+            echo "cloudfront_aliases = [$(printf '%s' "$CLOUDFRONT_ALIASES" | sed 's/,/","/g; s/^/"/; s/$/"/')]" >> ci.auto.tfvars
+          fi
+
+          if [ -n "$PROD_ALB_NAME" ]; then
+            echo "prod_alb_name = \"$PROD_ALB_NAME\"" >> ci.auto.tfvars
+          fi
+
+          if [ -z "$PROD_ALB_DNS_NAME" ]; then
+            PROD_ALB_DNS_NAME="$(
+              aws elbv2 describe-load-balancers \
+                --query 'LoadBalancers[].LoadBalancerArn' \
+                --output text |
+              tr '\t' '\n' |
+              while read -r load_balancer_arn; do
+                [ -z "$load_balancer_arn" ] && continue
+                stack_tag="$(
+                  aws elbv2 describe-tags \
+                    --resource-arns "$load_balancer_arn" \
+                    --query 'TagDescriptions[0].Tags[?Key==`ingress.k8s.aws/stack`].Value | [0]' \
+                    --output text
+                )"
+                if [ "$stack_tag" = "$PROD_INGRESS_STACK" ]; then
+                  aws elbv2 describe-load-balancers \
+                    --load-balancer-arns "$load_balancer_arn" \
+                    --query 'LoadBalancers[0].DNSName' \
+                    --output text
+                  break
+                fi
+              done
+            )"
+          fi
+
+          if [ -n "$PROD_ALB_DNS_NAME" ]; then
+            echo "prod_alb_dns_name = \"$PROD_ALB_DNS_NAME\"" >> ci.auto.tfvars
+            echo "edge_enabled = true" >> ci.auto.tfvars
+          elif [ -n "$EDGE_ENABLED" ]; then
+            echo "edge_enabled = $EDGE_ENABLED" >> ci.auto.tfvars
+          else
+            echo "No ALB found for ingress.k8s.aws/stack=$PROD_INGRESS_STACK; disabling edge resources for this Terraform run."
+            echo "edge_enabled = false" >> ci.auto.tfvars
+          fi
+
+          if [ -n "$INVOICE_EMAIL_SENDER" ]; then
+            echo "invoice_email_sender = \"$INVOICE_EMAIL_SENDER\"" >> ci.auto.tfvars
+          fi
+
+          if [ -n "$INVOICE_EMAIL_ENVIRONMENTS" ]; then
+            echo "invoice_email_environments = [$(printf '%s' "$INVOICE_EMAIL_ENVIRONMENTS" | sed 's/,/","/g; s/^/"/; s/$/"/')]" >> ci.auto.tfvars
+          fi
+
+      - name: Terraform init
+        working-directory: terraform
+        run: terraform init -input=false -backend-config=backend.hcl
+
+      - name: Terraform validate
+        working-directory: terraform
+        run: terraform validate
+
+      - name: Terraform plan
+        working-directory: terraform
+        run: terraform plan -input=false -out=tfplan
+
+      - name: Terraform apply
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        working-directory: terraform
+        run: terraform apply -input=false -auto-approve tfplan

@@ -1,7 +1,7 @@
 locals {
   cloudfront_aliases                 = length(var.cloudfront_aliases) > 0 ? var.cloudfront_aliases : [var.domain_name]
   cloudfront_certificate_domain_name = coalesce(var.cloudfront_certificate_domain_name, var.domain_name)
-  prod_alb_origin_domain_name        = coalesce(var.prod_alb_dns_name, try(data.aws_lb.prod_alb[0].dns_name, null))
+  prod_alb_origin_domain_name        = var.edge_enabled ? coalesce(var.prod_alb_dns_name, try(data.aws_lb.prod_alb[0].dns_name, null)) : null
 }
 
 data "aws_lb" "prod_alb" {
