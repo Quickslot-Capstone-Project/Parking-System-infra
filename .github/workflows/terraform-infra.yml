@@ -77,13 +77,17 @@ jobs:
       - name: Write backend config
         working-directory: terraform
         run: |
-          cat > backend.hcl <<EOF
-          bucket       = "$TF_STATE_BUCKET"
-          key          = "$TF_STATE_KEY"
-          region       = "$AWS_REGION"
-          encrypt      = true
-          use_lockfile = true
-          EOF
+          tf_state_bucket="$(printf '%s' "$TF_STATE_BUCKET" | tr -d '\r\n')"
+          tf_state_key="$(printf '%s' "$TF_STATE_KEY" | tr -d '\r\n')"
+          aws_region="$(printf '%s' "$AWS_REGION" | tr -d '\r\n')"
+
+          {
+            printf 'bucket       = "%s"\n' "$tf_state_bucket"
+            printf 'key          = "%s"\n' "$tf_state_key"
+            printf 'region       = "%s"\n' "$aws_region"
+            printf 'encrypt      = true\n'
+            printf 'use_lockfile = true\n'
+          } > backend.hcl
 
       - name: Write CI Terraform variables
         working-directory: terraform
