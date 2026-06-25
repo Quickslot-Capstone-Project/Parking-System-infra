@@ -159,12 +159,13 @@ jobs:
           fi
 
           PROD_ALB_DNS_NAME="$(clean_value "$PROD_ALB_DNS_NAME")"
+          EDGE_ENABLED="$(clean_value "$EDGE_ENABLED")"
 
           if [ -n "$PROD_ALB_DNS_NAME" ]; then
             write_string_var "prod_alb_dns_name" "$PROD_ALB_DNS_NAME"
             echo "edge_enabled = true" >> ci.auto.tfvars
-          elif [ -n "$EDGE_ENABLED" ]; then
-            echo "edge_enabled = $(clean_value "$EDGE_ENABLED")" >> ci.auto.tfvars
+          elif [ "$EDGE_ENABLED" = "false" ]; then
+            echo "edge_enabled = false" >> ci.auto.tfvars
           else
             echo "No ALB found for ingress.k8s.aws/stack=$PROD_INGRESS_STACK; disabling edge resources for this Terraform run."
             echo "edge_enabled = false" >> ci.auto.tfvars
