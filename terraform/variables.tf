@@ -122,6 +122,18 @@ variable "application_service_account" {
   default     = "smart-parking-app"
 }
 
+variable "external_secrets_namespace" {
+  description = "Kubernetes namespace where External Secrets Operator is installed."
+  type        = string
+  default     = "external-secrets"
+}
+
+variable "external_secrets_service_account" {
+  description = "External Secrets Operator service account that reads AWS Secrets Manager."
+  type        = string
+  default     = "external-secrets"
+}
+
 variable "additional_tags" {
   description = "Additional tags for all supported resources."
   type        = map(string)
