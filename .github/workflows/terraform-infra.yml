@@ -34,7 +34,7 @@ env:
 
 jobs:
   terraform:
-    name: Bootstrap, Plan, and Apply
+    name: Bootstrap, Plan, Apply
     runs-on: ubuntu-latest
 
     steps:
