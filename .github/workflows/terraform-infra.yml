@@ -98,6 +98,7 @@ jobs:
           PROD_ALB_NAME: ${{ vars.PROD_ALB_NAME }}
           PROD_ALB_DNS_NAME: ${{ vars.PROD_ALB_DNS_NAME }}
           EDGE_ENABLED: ${{ vars.EDGE_ENABLED }}
+          EKS_ADMIN_PRINCIPAL_ARNS: ${{ vars.EKS_ADMIN_PRINCIPAL_ARNS }}
           INVOICE_EMAIL_SENDER: ${{ vars.INVOICE_EMAIL_SENDER }}
           INVOICE_EMAIL_ENVIRONMENTS: ${{ vars.INVOICE_EMAIL_ENVIRONMENTS }}
         run: |
@@ -174,6 +175,8 @@ jobs:
           write_string_var "invoice_email_sender" "$INVOICE_EMAIL_SENDER"
 
           write_list_var "invoice_email_environments" "$INVOICE_EMAIL_ENVIRONMENTS"
+
+          write_list_var "eks_admin_principal_arns" "$EKS_ADMIN_PRINCIPAL_ARNS"
 
       - name: Terraform init
         working-directory: terraform

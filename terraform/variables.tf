@@ -98,6 +98,12 @@ variable "node_max_size" {
   default     = 4
 }
 
+variable "eks_admin_principal_arns" {
+  description = "IAM principal ARNs that should receive cluster admin access through EKS access entries."
+  type        = set(string)
+  default     = ["arn:aws:iam::533595510771:user/nimesh"]
+}
+
 variable "dynamodb_point_in_time_recovery" {
   description = "Enable point-in-time recovery for the application tables."
   type        = bool

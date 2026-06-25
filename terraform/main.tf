@@ -78,6 +78,7 @@ module "eks" {
   node_desired_size            = var.node_desired_size
   node_min_size                = var.node_min_size
   node_max_size                = var.node_max_size
+  admin_principal_arns         = var.eks_admin_principal_arns
   tags                         = local.common_tags
 
   # Wait for all networking, including NAT routes, before EKS creates nodes.
